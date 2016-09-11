@@ -224,7 +224,14 @@ function useBlueIncubatorStrategy(incubators, eggSlots, eggTypes) {
 	var totalBlueIncubators = incubators.length;
 	var b = 0;
 	for (b = 0; b < totalBlueIncubators; b++) {
-		useStrategy(incubators[b], eggSlots, eggTypes);
+		var blueIncubator = incubators[b];
+		if (blueIncubator.remUses == 0) {
+			// remove item from array
+			incubators.splice(b, 1);
+			totalBlueIncubators--;
+		} else {
+			useStrategy(blueIncubator, eggSlots, eggTypes);
+		}
 	}
 }
 
