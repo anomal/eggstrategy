@@ -14,7 +14,6 @@ for (c = 0; c < combinations.length; c++) {
 	permutations = permutations.concat(findPermutations(combinations[c]));
 }
 
-//printArray(permutations,0);
 var testCases = [];
 var numPermutations = permutations.length;
 console.log(numPermutations);
@@ -29,9 +28,7 @@ console.log(testCases.length);
 var TOTAL_EGG_SLOTS = 9;
 
 function run() {
-
 	try {
-//console.profile('myProfiler');
 		totalKmWalked = document.getElementById("totalKmWalked").value;
 		distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value; 
 		var chance10km = document.getElementById("chance10km").value;
@@ -155,8 +152,6 @@ console.log('total blue incubators: ' + testCase.blueIncubators.length);
 			var item = bestFor10kmHatching[n];
 			console.log(item.hatched10kmCount + " #" + item.index + ": " + item.testCase.blueStrategy + " , " + item.testCase.orangeStrategy);
 		}
-
-//console.profileEnd('myProfiler');
 	} catch (err) {
 		document.getElementById("errors").innerHTML = err.message; 
 	}
