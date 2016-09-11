@@ -260,39 +260,32 @@ function isUsable(incubator) {
 
 function printEggSlots(elementId, eggSlots, km, numNewInc) {
 	var tr = document.getElementById(elementId).insertRow();
-	var th = document.createElement("th");
-	th.innerHTML = km;
-	tr.appendChild(th);
-	var td;
+	var text = '<th>' + km + '</th>';
 	var i = 0;
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
 		var eggSlot = eggSlots[i];
-		td = tr.insertCell();
 		if (eggSlot == null) {
-			text = "Hatched";
-			td.style.backgroundColor = "lime";
+			text += '<td class="hatched">Hatched</td>';
 		} else {
 			var egg = eggSlot.egg;
-			var text = getEggIncubationCompletionText(egg);
 			var incubator = eggSlot.incubator;
+			var styleClass = '';
 			if (incubator != null) {
 				if (incubator.remUses == Infinity) {
-					td.style.backgroundColor = "orange";
+					styleClass = 'infinity';
 				} else if (incubator.remUses == 3) {
-					td.style.backgroundColor = "#6666ff";
+					styleClass = 'threeUses';
 				} else if (incubator.remUses == 2) {
-					td.style.backgroundColor = "#9999ff";
+					styleClass = 'twoUses';
 				} else if (incubator.remUses == 1){
-					td.style.backgroundColor = "#ccccff";
-				} else {
-					td.style.backgroundColor = "red";
-				}				
+					styleClass = 'oneUse';
+				} 
 			}
+			var completion = getEggIncubationCompletionText(egg);
+			text += '<td class="' + styleClass + '">' + completion + '</td>';
 		}
-        	td.appendChild(document.createTextNode(text));
 	}
-	td = tr.insertCell();
-        td.appendChild(document.createTextNode(numNewInc));
+	tr.innerHTML = text + '<td>' + numNewInc + '</td>';
 }
 
 function getEggIncubationCompletionText(egg) {
