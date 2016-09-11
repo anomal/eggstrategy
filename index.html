@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Egg Incubation Strategy Simulation</title>
+<meta charset="utf-8"/>
+<style>
+body {
+	font-family: Helvetica, Arial, Sans-Serif;
+}
+table, tr, th, td {
+	border: none;
+}
+th {
+	padding: 0.1em;
+	background-color: #cccccc;
+	width: 5em;
+}
+td {
+	padding: 0.1em;
+	width: 4em;
+	background-color: #eeeeee;
+}
+input { width : 4em; }
+button {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  padding: 8px 20px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+button:focus {
+  outline: none
+}
+#errors { color : red }
+</style>
+<script>
+function toggle(elementId) {
+	var element = document.getElementById(elementId);
+	if (element.style.display == 'none') {
+		element.style.display = 'inline';
+	} else {
+		element.style.display = 'none';
+	}
+}
+</script>
+</head>
+<body>
+<h1>Egg Incubation Strategy Simulation</h1>
+<h2>Parameters</h2>
+<form>
+Total distance walked (km): <input id="totalKmWalked" type="text" value="3000"/> Distance to travel to get new incubator (km): <input id="kmPerNewIncubator" type="text" value="20"/><br/>Chance of 10 km egg: <input id="chance10km" type="text" value="0.05"/> Chance of 2 km egg: <input id="chance2km" type="text" value="0.20"/> <span id="calculatedChance5km"></span>
+<p><button type="button" onclick="run()">Run Simulation</button></p> 
+</form>
+<div id="best"></div>
+<div id="results"></div>
+<div id="errors"></div>
+<script type="text/javascript" src="eggstrategy.js"></script>
+</body>
+</html>
