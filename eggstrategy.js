@@ -26,6 +26,7 @@ for (p = 0; p < numPermutations; p++) {
 }
 console.log(testCases.length);
 var TOTAL_EGG_SLOTS = 9;
+var bestFor10kmHatching = [];
 
 function run() {
 	try {
@@ -49,7 +50,8 @@ function run() {
 		for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
 			initEggs[initEggs.length] = generateRandomEgg();
 		}
-		var bestFor10kmHatching = [];
+
+		bestFor10kmHatching = [];
 		var totalTestCases = testCases.length;
 		var c = 0;
 		for (c = 0; c < totalTestCases; c++) {
@@ -146,15 +148,30 @@ function run() {
 				bestFor10kmHatching[count] = {hatched10kmCount : hatched10kmCount, testCase : testCase, index : c};
 			}
 		}
-		var n = 0;
-		for (n = 0; n < bestFor10kmHatching.length; n++) {
-			var item = bestFor10kmHatching[n];
-			console.log(item.hatched10kmCount + " #" + item.index + ": " + item.testCase.blueStrategy + " , " + item.testCase.orangeStrategy);
-		}
+		printBestResultsDesc();
 	} catch (err) {
 		document.getElementById("errors").innerHTML = err.message; 
 	}
 
+}
+
+function printBestResultsDesc() {
+	var text = "<table><tr><th style='width:2em'>#</th><th>10km hatches</th><th style='width: 20em'>Strategy</th></tr>";
+	var i = 0;
+	var length = bestFor10kmHatching.length;
+	var bestResult = bestFor10kmHatching[0].hatched10kmCount;
+	for (i = 0; i < length; i++) {
+		var item = bestFor10kmHatching[i];
+		var styleClass = "";
+		if (item.hatched10kmCount == 0) {
+			styleClass = "bad";
+		} else if ( (item.hatched10kmCount / bestResult) > 0.8) {
+			styleClass = "good";
+		}
+		text += "<tr><td>" + (item.index + 1) + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>Blue: " + item.testCase.blueStrategy + "; Orange (infinite): " + item.testCase.orangeStrategy + "</td></tr>";
+	}
+	var best = document.getElementById("best");
+	best.innerHTML = text + "</table>";
 }
 
 /*
