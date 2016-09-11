@@ -145,7 +145,6 @@ function run() {
 			if (!inserted) {
 				bestFor10kmHatching[count] = {hatched10kmCount : hatched10kmCount, testCase : testCase, index : c};
 			}
-console.log('total blue incubators: ' + testCase.blueIncubators.length);
 		}
 		var n = 0;
 		for (n = 0; n < bestFor10kmHatching.length; n++) {
