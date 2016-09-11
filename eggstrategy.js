@@ -4,7 +4,7 @@ var distanceTravelledToGetNewIncubator = null;
 var chance10kmDistribMax = null;
 var chance2kmDistribMax = null;
 
-var input = ["2km", "5km", "10km"];
+var input = [2, 5, 10];
 
 var combinations = findCombinations(input);
 
@@ -121,11 +121,11 @@ function run() {
 			var h = 0;
 			for (h = 0; h < testCase.hatchedEggs.length; h++) {
 				var pokemon = testCase.hatchedEggs[h];
-				if (pokemon.type == "10km") {
+				if (pokemon.type == 10) {
 					hatched10kmCount++;
-				} else if (pokemon.type == "5km") {
+				} else if (pokemon.type == 5) {
 					hatched5kmCount++;
-				} else if (pokemon.type == "2km") {
+				} else if (pokemon.type == 2) {
 					hatched2kmCount++;
 				} 
 			}
@@ -297,9 +297,8 @@ function printEggSlots(elementId, eggSlots, km, numNewInc) {
 
 function getEggIncubationCompletionText(egg) {
 	var eggType = egg.type;
-	//var eggTypeLength = eggType.length;
-	var completion = eggType.slice(0, eggType.length - 2) - egg.remIncubation;
-	return completion + "/" + eggType;
+	var completion = eggType - egg.remIncubation;
+	return completion + "/" + eggType + "km";
 }
 
 function incrementIncubationTime(eggSlots) {
@@ -356,13 +355,13 @@ function generateRandomEgg() {
 	var eggType;
 	var remainingIncubationTime;
 	if (random < chance10kmDistribMax) {
-		eggType = "10km";
+		eggType = 10;
 		remainingIncubationTime = 10;
 	} else if (random < chance2kmDistribMax) {
-		eggType = "2km";
+		eggType = 2;
 		remainingIncubationTime = 2;
 	} else {
-		eggType = "5km";
+		eggType = 5;
 		remainingIncubationTime = 5;
 	}
 	var egg = {
