@@ -187,7 +187,7 @@ function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHat
 }
 
 function printBestResultsDesc() {
-	var text = "<table><tr><th style='width: 1em'>#</th><th style='width: 20em'>Strategy Description</th><th>10km hatches</th><th>Total hatches</th></tr>";
+	var text = "<table><tr><th style='width: 1em'>#</th><th style='width: 20em'>Prioritization strategy</th><th>10km hatches</th><th>Total hatches</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
 	for (i = 0; i < length; i++) {
