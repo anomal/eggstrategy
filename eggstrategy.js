@@ -152,21 +152,22 @@ function run() {
 					hatched2kmCount++;
 				} 
 			}
-			stratResults.innerHTML = "<h3>Hatches:</h3><strong>10km: " + hatched10kmCount + "</strong><br/>5km: " + hatched5kmCount + "<br/>2km: " + hatched2kmCount + "<br/><strong>Total: " + testCase.hatchedEggs.length + "</strong>";
+			var totalHatched = testCase.hatchedEggs.length;
+			stratResults.innerHTML = "<h3>Hatches:</h3><strong>10km: " + hatched10kmCount + "</strong><br/>5km: " + hatched5kmCount + "<br/>2km: " + hatched2kmCount + "<br/><strong>Total: " + totalHatched + "</strong>";
 			printLeftoverBlueIncubators("leftovers" + (c+1), testCase.blueIncubators);
 			var inserted = false;
 			var count = bestFor10kmHatching.length;
 			var m = 0;
 // try binary search instead
 			while (!inserted && m < count) {
-				if (hatched10kmCount > bestFor10kmHatching[m].hatched10kmCount) {
-					bestFor10kmHatching.splice(m, 0, { hatched10kmCount : hatched10kmCount, testCase : testCase, index : c});
+				if (isBetter(hatched10kmCount, totalHatched, bestFor10kmHatching[m].hatched10kmCount, bestFor10kmHatching[m].totalHatched)) {
+					bestFor10kmHatching.splice(m, 0, { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, index : c });
 					inserted = true;
 				}
 				m++;
 			}
 			if (!inserted) {
-				bestFor10kmHatching[count] = {hatched10kmCount : hatched10kmCount, testCase : testCase, index : c};
+				bestFor10kmHatching[count] = { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, index : c };
 			}
 		}
 		printBestResultsDesc();
@@ -176,20 +177,28 @@ function run() {
 
 }
 
+function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHatched) {
+	var hatched10kmDiff = aHatched10kmCount - bHatched10kmCount;
+	if (hatched10kmDiff != 0) {
+		return aHatched10kmCount > bHatched10kmCount;
+	} else {
+		return aTotalHatched > bTotalHatched;
+	}
+}
+
 function printBestResultsDesc() {
-	var text = "<table><tr><th>10km hatches</th><th style='width: 20em'>Strategy</th></tr>";
+	var text = "<table><tr><th style='width: 20em'>Strategy</th><th>10km hatches</th><th>Total hatches</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
-	var bestResult = bestFor10kmHatching[0].hatched10kmCount;
 	for (i = 0; i < length; i++) {
 		var item = bestFor10kmHatching[i];
 		var styleClass = "";
 		if (item.hatched10kmCount == 0) {
 			styleClass = "bad";
-		} else if ( (item.hatched10kmCount / bestResult) >= 1.0) {
+		} else if ( item.hatched10kmCount == bestFor10kmHatching[0].hatched10kmCount && item.totalHatched == bestFor10kmHatching[0].totalHatched) {
 			styleClass = "good";
 		}
-		text += "<td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>#" + + (item.index + 1) + ". Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td></tr>";
+		text += "<td class='" + styleClass + "'>#" + + (item.index + 1) + ". Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>" + item.totalHatched +"</td></tr>";
 	}
 	var best = document.getElementById("best");
 	best.innerHTML = text + "</table>";
