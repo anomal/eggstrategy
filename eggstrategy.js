@@ -30,6 +30,7 @@ for (p = 0; p < numPermutations; p++) {
 }
 var TOTAL_EGG_SLOTS = 9;
 var bestFor10kmHatching = [];
+var eggCache = [];
 
 function accountsForAllEggTypes(merged) {
 	return contains(merged, 10) && contains(merged, 5) && contains(merged, 2);
@@ -62,6 +63,7 @@ function run() {
 		results.innerHTML = "";
 
 		// use same initial eggs for every strategy
+		eggCache = [];
 		var initEggs = [];
 		var i = 0;
 		for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
@@ -116,6 +118,7 @@ function run() {
 			th.innerHTML = "New Incubators";
 			tr.appendChild(th);
 			var km = 0;
+			var eggIndex = 0;
 			for (km = 0; km < totalKmWalked; km++) {
 				var newInc = 0;
 				if (km % distanceTravelledToGetNewIncubator == 0) {
@@ -127,7 +130,8 @@ function run() {
 				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy);
 				for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
 					if (testCase.eggSlots[s] == null) {
-						testCase.eggSlots[s] = { egg : generateRandomEgg(), incubator : null };
+						testCase.eggSlots[s] = { egg : getNextEgg(eggIndex), incubator : null };
+						eggIndex++;
 					}
 				}
 				incrementIncubationTime(testCase.eggSlots);
@@ -182,7 +186,7 @@ function printBestResultsDesc() {
 		var styleClass = "";
 		if (item.hatched10kmCount == 0) {
 			styleClass = "bad";
-		} else if ( (item.hatched10kmCount / bestResult) >= 0.75) {
+		} else if ( (item.hatched10kmCount / bestResult) >= 1.0) {
 			styleClass = "good";
 		}
 		text += "<td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>#" + + (item.index + 1) + ". Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td></tr>";
@@ -381,6 +385,15 @@ function incubateFirstEggOfType(incubator, eggSlots, eggType) {
 		}
 	}
   	return false;
+}
+
+function getNextEgg(i) {
+	var egg = eggCache[i];
+	if (egg == null) {
+		egg = generateRandomEgg();
+		eggCache[i] = egg;
+	}
+	return { type : egg.type, remIncubation : egg.remIncubation };
 }
 
 function generateRandomEgg() {
