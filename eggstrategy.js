@@ -173,7 +173,7 @@ function run() {
 }
 
 function printBestResultsDesc() {
-	var text = "<table><tr><th style='width:2em'>#</th><th>10km hatches</th><th style='width: 20em'>Strategy</th></tr>";
+	var text = "<table><tr><th>10km hatches</th><th style='width: 20em'>Strategy</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
 	var bestResult = bestFor10kmHatching[0].hatched10kmCount;
@@ -185,7 +185,7 @@ function printBestResultsDesc() {
 		} else if ( (item.hatched10kmCount / bestResult) >= 0.75) {
 			styleClass = "good";
 		}
-		text += "<tr><td>" + (item.index + 1) + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>Blue: " + item.testCase.blueStrategy + "; Orange (infinite): " + item.testCase.orangeStrategy + "</td></tr>";
+		text += "<td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>#" + + (item.index + 1) + ". Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td></tr>";
 	}
 	var best = document.getElementById("best");
 	best.innerHTML = text + "</table>";
