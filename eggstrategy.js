@@ -187,7 +187,7 @@ function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHat
 }
 
 function printBestResultsDesc() {
-	var text = "<table><tr><th style='width: 20em'>Strategy</th><th>10km hatches</th><th>Total hatches</th></tr>";
+	var text = "<table><tr><th style='width: 1em'>#</th><th style='width: 20em'>Strategy Description</th><th>10km hatches</th><th>Total hatches</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
 	for (i = 0; i < length; i++) {
@@ -198,7 +198,7 @@ function printBestResultsDesc() {
 		} else if ( item.hatched10kmCount == bestFor10kmHatching[0].hatched10kmCount && item.totalHatched == bestFor10kmHatching[0].totalHatched) {
 			styleClass = "good";
 		}
-		text += "<td class='" + styleClass + "'>#" + + (item.index + 1) + ". Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>" + item.totalHatched +"</td></tr>";
+		text += "<td class='" + styleClass + "'>" + (item.index + 1) + "</td><td class='" + styleClass + "'>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>" + item.totalHatched +"</td></tr>";
 	}
 	var best = document.getElementById("best");
 	best.innerHTML = text + "</table>";
