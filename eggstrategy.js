@@ -4,9 +4,9 @@ var distanceTravelledToGetNewIncubator = null;
 var chance10kmDistribMax = null;
 var chance2kmDistribMax = null;
 
-var input = [2, 5, 10];
+var ALL_EGG_TYPES = [2, 5, 10];
 
-var combinations = findCombinations(input);
+var combinations = findCombinations(ALL_EGG_TYPES);
 
 var permutations = [];
 var c = 0;
@@ -16,17 +16,34 @@ for (c = 0; c < combinations.length; c++) {
 
 var testCases = [];
 var numPermutations = permutations.length;
-console.log(numPermutations);
 var p = 0;
 for (p = 0; p < numPermutations; p++) {
 	var q = 0;
 	for (q = 0; q < numPermutations; q++) {
-		testCases[testCases.length] = { blueStrategy : permutations[p], orangeStrategy : permutations[q] };
+		var permutationBlue = permutations[p];
+		var permutationOrange = permutations[q];
+		var merged = permutationBlue.concat(permutationOrange);
+		if (accountsForAllEggTypes(merged)) {
+			testCases[testCases.length] = { blueStrategy : permutationBlue, orangeStrategy : permutationOrange };
+		}
 	}
 }
-console.log(testCases.length);
 var TOTAL_EGG_SLOTS = 9;
 var bestFor10kmHatching = [];
+
+function accountsForAllEggTypes(merged) {
+	return contains(merged, 10) && contains(merged, 5) && contains(merged, 2);
+}
+
+function contains(a, obj) {
+    var i = a.length;
+    while (i--) {
+       if (a[i] === obj) {
+           return true;
+       }
+    }
+    return false;
+}
 
 function run() {
 	try {
@@ -165,7 +182,7 @@ function printBestResultsDesc() {
 		var styleClass = "";
 		if (item.hatched10kmCount == 0) {
 			styleClass = "bad";
-		} else if ( (item.hatched10kmCount / bestResult) > 0.8) {
+		} else if ( (item.hatched10kmCount / bestResult) >= 0.75) {
 			styleClass = "good";
 		}
 		text += "<tr><td>" + (item.index + 1) + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>Blue: " + item.testCase.blueStrategy + "; Orange (infinite): " + item.testCase.orangeStrategy + "</td></tr>";
