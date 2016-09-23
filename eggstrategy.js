@@ -50,11 +50,11 @@ function run() {
 	try {
 		totalKmWalked = document.getElementById("totalKmWalked").value;
 		distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value; 
-		var chance10km = document.getElementById("chance10km").value;
-		var chance2km = document.getElementById("chance2km").value;
+		var chance10km = document.getElementById("chance10km").value / 100;
+		var chance2km = document.getElementById("chance2km").value / 100;
 		var chance5km = 1 - chance10km - chance2km;
 
-		document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg: " + chance5km;
+		document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): " + (chance5km * 100);
 
 		chance10kmDistribMax = chance10km;
 		chance2kmDistribMax = chance10km + chance2km;
