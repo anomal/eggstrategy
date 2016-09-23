@@ -178,11 +178,10 @@ function run() {
 }
 
 function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHatched) {
-	var hatched10kmDiff = aHatched10kmCount - bHatched10kmCount;
-	if (hatched10kmDiff != 0) {
-		return aHatched10kmCount > bHatched10kmCount;
-	} else {
+	if (aHatched10kmCount - bHatched10kmCount == 0) {
 		return aTotalHatched > bTotalHatched;
+	} else {
+		return aHatched10kmCount > bHatched10kmCount;
 	}
 }
 
