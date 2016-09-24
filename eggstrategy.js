@@ -361,10 +361,9 @@ function printDetails(eggSlots, km, numInc, hatchedEggsCount) {
 		} else {
 			var styleClass = '';
 			if (eggSlot.incubator != null) {
-				styleClass =  getDetailsCellStyleClass(eggSlot.incubator.remUses);
+				styleClass = getDetailsCellStyleClass(eggSlot.incubator.remUses);
 			}
-			var completion = getEggIncubationCompletionText(eggSlot.egg);
-			text += '<td class="' + styleClass + '">' + completion + '</td>';
+			text += '<td class="' + styleClass + '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>';
 		}
 	}
 	return text + '<td>' + numInc + '</td><td>' + tenKmHatches + '</td><td>' + hatchedEggsCount + '</td></tr>';
