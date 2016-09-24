@@ -122,6 +122,7 @@ function run() {
 				tableInner += printDetails(testCase.eggSlots, km, testCase.blueIncubators.length, testCase.hatchedEggs.length);
 				useBlueIncubatorStrategy(testCase.blueIncubators, testCase.eggSlots, testCase.blueStrategy, blueStrategyLength);
 				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy, orangeStrategyLength);
+				var s = 0;
 				for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
 					if (testCase.eggSlots[s] == null) {
 						testCase.eggSlots[s] = { egg : getNextEgg(eggIndex), incubator : null };
