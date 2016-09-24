@@ -396,13 +396,11 @@ function getEggIncubationCompletionText(egg) {
 }
 
 function incrementIncubationTime(eggSlots) {
+	var i = 0;
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
-		if (eggSlots[i] != null) {
-			var eggSlot = eggSlots[i];
-			var egg = eggSlot.egg;
-			if (eggSlot != null && egg != null && eggSlot.incubator != null) {
-				egg.remIncubation--;
-			}
+		var eggSlot = eggSlots[i];
+		if (eggSlot != null && eggSlot.egg != null && eggSlot.incubator != null) {
+			eggSlot.egg.remIncubation--;
 		}
 	}
 }
