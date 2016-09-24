@@ -369,7 +369,6 @@ function printDetails(elementId, eggSlots, km, numInc, hatchedEggsCount) {
 		if (eggSlot == null) {
 			text += '<td class="hatched">Hatched</td>';
 		} else {
-			var egg = eggSlot.egg;
 			var incubator = eggSlot.incubator;
 			var styleClass = '';
 			if (incubator != null) {
@@ -383,7 +382,7 @@ function printDetails(elementId, eggSlots, km, numInc, hatchedEggsCount) {
 					styleClass = 'oneUse';
 				} 
 			}
-			var completion = getEggIncubationCompletionText(egg);
+			var completion = getEggIncubationCompletionText(eggSlot.egg);
 			text += '<td class="' + styleClass + '">' + completion + '</td>';
 		}
 	}
