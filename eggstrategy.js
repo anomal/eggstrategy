@@ -80,8 +80,9 @@ function run() {
 			testCase.orangeIncubator = { remUses : Infinity, isOccupied : false };
 			testCase.hatchedEggs = [];
 
+			var id = getTestCaseId(testCase);
 			var h2 = document.createElement("h2");
-			h2.innerHTML = "Strategy " + (c+1) + ": " + testCase.blueStrategy + " / " + testCase.orangeStrategy;
+			h2.innerHTML = "Strategy " + id + ": " + testCase.blueStrategy + " / " + testCase.orangeStrategy;
 			results.appendChild(h2);
 			var desc = document.createElement("span");
 			desc.innerHTML = "Blue incubator strategy: " + testCase.blueStrategy + "; orange incubator strategy: " + testCase.orangeStrategy + ". ";
@@ -161,13 +162,13 @@ function run() {
 // try binary search instead
 			while (!inserted && m < count) {
 				if (isBetter(hatched10kmCount, totalHatched, bestFor10kmHatching[m].hatched10kmCount, bestFor10kmHatching[m].totalHatched)) {
-					bestFor10kmHatching.splice(m, 0, { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, index : c });
+					bestFor10kmHatching.splice(m, 0, { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id });
 					inserted = true;
 				}
 				m++;
 			}
 			if (!inserted) {
-				bestFor10kmHatching[count] = { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, index : c };
+				bestFor10kmHatching[count] = { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id };
 			}
 		}
 		printBestResultsDesc();
@@ -175,6 +176,31 @@ function run() {
 		document.getElementById("errors").innerHTML = err.message; 
 	}
 
+}
+
+function getTestCaseId(testCase) {
+	var id = "";
+	var i = 0;
+	for (i = 0; i < 3; i++) {
+		var digit = testCase.blueStrategy[i];
+		if (digit == null) {
+			digit = 0;
+		} else if (digit == 10) {
+			digit = 'a';
+		}
+		id += digit;
+	}
+	i = 0;
+	for (i = 0; i < 3; i++) {
+		var digit = testCase.orangeStrategy[i];
+		if (digit == null) {
+			digit = 0;
+		} else if (digit == 10) {
+			digit = 'a';
+		}
+		id += digit;
+	}
+	return id;
 }
 
 function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHatched) {
@@ -186,7 +212,7 @@ function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHat
 }
 
 function printBestResultsDesc() {
-	var text = "<table><tr><th style='width: 1em'>#</th><th style='width: 20em'>Prioritization strategy</th><th>10km hatches</th><th>Total hatches</th></tr>";
+	var text = "<table><tr><th style='width: 2em'>#</th><th style='width: 20em'>Prioritization strategy</th><th>10km hatches</th><th>Total hatches</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
 	for (i = 0; i < length; i++) {
@@ -197,7 +223,7 @@ function printBestResultsDesc() {
 		} else if ( item.hatched10kmCount == bestFor10kmHatching[0].hatched10kmCount && item.totalHatched == bestFor10kmHatching[0].totalHatched) {
 			styleClass = "good";
 		}
-		text += "<td class='" + styleClass + "'>" + (item.index + 1) + "</td><td class='" + styleClass + "'>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>" + item.totalHatched +"</td></tr>";
+		text += "<td class='" + styleClass + "'>" + (item.id) + "</td><td class='" + styleClass + "'>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>" + item.totalHatched +"</td></tr>";
 	}
 	var best = document.getElementById("best");
 	best.innerHTML = text + "</table>";
