@@ -122,6 +122,8 @@ function run() {
 			var km = 0;
 			var eggIndex = 0;
 			var totalBlueIncubators = 0;
+			var blueStrategyLength = testCase.blueStrategy.length;
+			var orangeStrategyLength = testCase.blueStrategy.length;
 			for (km = 0; km < totalKmWalked; km++) {
 				var newInc = 0;
 				if (km % distanceTravelledToGetNewIncubator == 0) {
@@ -129,8 +131,8 @@ function run() {
 					testCase.blueIncubators[testCase.blueIncubators.length] = { remUses : 3, isOccupied : false };
 				}
 				tableInner += printDetails(testCase.eggSlots, km, testCase.blueIncubators.length, testCase.hatchedEggs.length);
-				useBlueIncubatorStrategy(testCase.blueIncubators, testCase.eggSlots, testCase.blueStrategy);
-				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy);
+				useBlueIncubatorStrategy(testCase.blueIncubators, testCase.eggSlots, testCase.blueStrategy, blueStrategyLength);
+				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy, orangeStrategyLength);
 				for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
 					if (testCase.eggSlots[s] == null) {
 						var egg = getNextEgg(eggIndex);
@@ -304,7 +306,7 @@ function exclude(excluded, eggTypes) {
 	return newArray;
 }
 
-function useBlueIncubatorStrategy(incubators, eggSlots, eggTypes) {
+function useBlueIncubatorStrategy(incubators, eggSlots, eggTypes, strategyLength) {
 	var totalBlueIncubators = incubators.length;
 	var b = 0;
 	for (b = 0; b < totalBlueIncubators; b++) {
@@ -315,16 +317,15 @@ function useBlueIncubatorStrategy(incubators, eggSlots, eggTypes) {
 			totalBlueIncubators--;
 			b--;
 		} else {
-			useStrategy(blueIncubator, eggSlots, eggTypes);
+			useStrategy(blueIncubator, eggSlots, eggTypes, strategyLength);
 		}
 	}
 }
 
-function useStrategy(incubator, eggSlots, eggTypes) {
+function useStrategy(incubator, eggSlots, eggTypes, strategyLength) {
 	if (isUsable(incubator)) {
-		var numEggTypes = eggTypes.length;
 		var t = 0;
-		for (t = 0; t < numEggTypes; t++) {
+		for (t = 0; t < strategyLength; t++) {
 			if (incubateFirstEggOfType(incubator, eggSlots, eggTypes[t])) {
 				return true;
 			}
