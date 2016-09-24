@@ -88,15 +88,14 @@ function run() {
 			var h2 = document.createElement("h2");
 			h2.innerHTML = "Strategy " + id + ": " + testCase.blueStrategy + " / " + testCase.orangeStrategy;
 			anchor.appendChild(h2);
-			var desc = document.createElement("span");
+			var backtotop = document.createElement("p");
+			backtotop.innerHTML = "<a href='#'>Back to top</a>";
+			results.appendChild(backtotop);
+			var desc = document.createElement("p");
 			desc.innerHTML = "Blue incubator strategy: " + testCase.blueStrategy + "; orange incubator strategy: " + testCase.orangeStrategy + ". ";
 			results.appendChild(desc);
-			var showHideLink = document.createElement("span");
-			showHideLink.innerHTML = '<a href="#" onclick="toggle(\'eggSlots' + (c+1) + '\');return false;">Show/Hide details</a><br/>';
-			results.appendChild(showHideLink);
 			var table = document.createElement("table");
 			table.id = "eggSlots" + (c+1);
-			table.style = "display:none";
 			results.appendChild(table);
 			var stratResults = document.createElement("div");
 			stratResults.id = "strategy" + (c+1);
@@ -179,10 +178,10 @@ function run() {
 			}
 		}
 		printBestResultsDesc(bestTotalHatches);
+
 	} catch (err) {
 		document.getElementById("errors").innerHTML = err.message; 
 	}
-
 }
 
 function getTestCaseId(testCase) {
