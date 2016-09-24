@@ -174,12 +174,7 @@ function createTestCaseFooter(c, results, hatched10kmCount, hatched5kmCount, hat
 	var stratResults = document.createElement("div");
 	stratResults.id = "strategy" + (c+1);
 	results.appendChild(stratResults);
-	var leftovers = document.createElement("div");
-	leftovers.id = "leftovers" + (c+1);
-	results.appendChild(leftovers);
-
 	stratResults.innerHTML = "<h3>Hatches:</h3><strong>10km: " + hatched10kmCount + "</strong><br/>5km: " + hatched5kmCount + "<br/>2km: " + hatched2kmCount + "<br/><strong>Total: " + totalHatched + "</strong>";
-	printLeftoverBlueIncubators("leftovers" + (c+1), blueIncubators);
 }
 
 function createTestCaseHeaderDesc(results, id, blueStrategy, orangeStrategy) {
@@ -341,20 +336,6 @@ function useStrategy(incubator, eggSlots, eggTypes, strategyLength) {
 			}
 		}
 	}
-}
-
-function printLeftoverBlueIncubators(elementId, blueIncubators) {
-	var text = "";
-	var totalCharges = 0;
-	for (i = 0; i < blueIncubators.length; i++) {
-		var incubator = blueIncubators[i];
-		if (incubator.remUses > 0) {
-			totalCharges += incubator.remUses;
-		}
-	}
-	text += "<h3>Unused blue incubator uses</h3>";
-	text += totalCharges;
-	document.getElementById(elementId).innerHTML = text; 
 }
 
 function isUsable(incubator) {
