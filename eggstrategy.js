@@ -398,11 +398,9 @@ function findHatchedEggs(hatchedEggs, eggSlots) {
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
 		var eggSlot = eggSlots[i];
 		if (eggSlot != null) {
-			var egg = eggSlot.egg;
-			if (egg != null && egg.remIncubation <= 0) {
-				var index = hatchedEggs.length;
-				hatchedEggs[index] = egg;
-				if (egg.type == 10) {
+			if (eggSlot.egg != null && eggSlot.egg.remIncubation <= 0) {
+				hatchedEggs[hatchedEggs.length] = eggSlot.egg;
+				if (eggSlot.egg.type == 10) {
 					tenKmHatches++;
 				}
 
