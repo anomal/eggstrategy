@@ -361,21 +361,27 @@ function printDetails(eggSlots, km, numInc, hatchedEggsCount) {
 			var incubator = eggSlot.incubator;
 			var styleClass = '';
 			if (incubator != null) {
-				if (incubator.remUses == Infinity) {
-					styleClass = 'infinity';
-				} else if (incubator.remUses == 3) {
-					styleClass = 'threeUses';
-				} else if (incubator.remUses == 2) {
-					styleClass = 'twoUses';
-				} else if (incubator.remUses == 1){
-					styleClass = 'oneUse';
-				} 
+				styleClass =  getDetailsCellStyleClass(incubator.remUses);
 			}
 			var completion = getEggIncubationCompletionText(eggSlot.egg);
 			text += '<td class="' + styleClass + '">' + completion + '</td>';
 		}
 	}
 	return text + '<td>' + numInc + '</td><td>' + tenKmHatches + '</td><td>' + hatchedEggsCount + '</td></tr>';
+}
+
+function getDetailsCellStyleClass(remainingUses) {
+	if (remainingUses == Infinity) {
+		return 'infinity';
+	} else if (remainingUses == 3) {
+		return 'threeUses';
+	} else if (remainingUses == 2) {
+		return 'twoUses';
+	} else if (remainingUses == 1){
+		return 'oneUse';
+	} else {
+		return '';
+	}
 }
 
 function getEggIncubationCompletionText(egg) {
