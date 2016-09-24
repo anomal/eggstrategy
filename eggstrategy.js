@@ -324,6 +324,7 @@ function useBlueIncubatorStrategy(incubators, eggSlots, eggTypes) {
 			// remove item from array
 			incubators.splice(b, 1);
 			totalBlueIncubators--;
+			b--;
 		} else {
 			useStrategy(blueIncubator, eggSlots, eggTypes);
 		}
