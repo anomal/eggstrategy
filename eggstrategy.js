@@ -124,8 +124,7 @@ function run() {
 				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy, orangeStrategyLength);
 				for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
 					if (testCase.eggSlots[s] == null) {
-						var egg = getNextEgg(eggIndex);
-						testCase.eggSlots[s] = { egg : egg, incubator : null };
+						testCase.eggSlots[s] = { egg : getNextEgg(eggIndex), incubator : null };
 						eggIndex++;
 					}
 				}
