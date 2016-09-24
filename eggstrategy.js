@@ -121,6 +121,9 @@ function run() {
 			th = document.createElement("th");
 			th.innerHTML = "New Incubators";
 			tr.appendChild(th);
+			th = document.createElement("th");
+			th.innerHTML = "Total Hatches";
+			tr.appendChild(th);
 			var km = 0;
 			var eggIndex = 0;
 			for (km = 0; km < totalKmWalked; km++) {
@@ -129,7 +132,7 @@ function run() {
 					newInc = 1;
 					testCase.blueIncubators[testCase.blueIncubators.length] = { remUses : 3, isOccupied : false };
 				}
-				printEggSlots("eggSlots" + (c+1), testCase.eggSlots, km, newInc);
+				printEggSlots("eggSlots" + (c+1), testCase.eggSlots, km, newInc, testCase.hatchedEggs.length);
 				useBlueIncubatorStrategy(testCase.blueIncubators, testCase.eggSlots, testCase.blueStrategy);
 				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy);
 				for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
@@ -348,7 +351,7 @@ function isUsable(incubator) {
 	return !(incubator.isOccupied) && (incubator.remUses == Infinity || incubator.remUses > 0);
 }
 
-function printEggSlots(elementId, eggSlots, km, numNewInc) {
+function printEggSlots(elementId, eggSlots, km, numNewInc, hatchedEggsCount) {
 	var tr = document.getElementById(elementId).insertRow();
 	var text = '<th>' + km + '</th>';
 	var i = 0;
@@ -375,7 +378,7 @@ function printEggSlots(elementId, eggSlots, km, numNewInc) {
 			text += '<td class="' + styleClass + '">' + completion + '</td>';
 		}
 	}
-	tr.innerHTML = text + '<td>' + numNewInc + '</td>';
+	tr.innerHTML = text + '<td>' + numNewInc + '</td><td>' + hatchedEggsCount + '</td>';
 }
 
 function getEggIncubationCompletionText(egg) {
