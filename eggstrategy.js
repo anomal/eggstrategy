@@ -437,9 +437,9 @@ function incubateFirstEggOfType(incubator, eggSlots, eggType) {
 	var i = 0;
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
 		eggSlot = eggSlots[i];
-		if (eggSlot != null) {	
+		if (eggSlot != null && eggSlot.incubator == null) {
 			egg = eggSlot.egg;
-			if (egg != null && eggSlot.incubator == null && egg.type == eggType) {
+			if (egg != null && egg.type == eggType) {
 				incubator.isOccupied = true;
 				eggSlot.incubator = incubator;
 				return true;
