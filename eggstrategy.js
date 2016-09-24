@@ -140,7 +140,7 @@ function run() {
 					newInc = 1;
 					testCase.blueIncubators[testCase.blueIncubators.length] = { remUses : 3, isOccupied : false };
 				}
-				printEggSlots("eggSlots" + (c+1), testCase.eggSlots, km, testCase.blueIncubators.length, testCase.hatchedEggs.length);
+				printDetails("eggSlots" + (c+1), testCase.eggSlots, km, testCase.blueIncubators.length, testCase.hatchedEggs.length);
 				useBlueIncubatorStrategy(testCase.blueIncubators, testCase.eggSlots, testCase.blueStrategy);
 				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy);
 				for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
@@ -360,7 +360,7 @@ function isUsable(incubator) {
 	return !(incubator.isOccupied) && (incubator.remUses == Infinity || incubator.remUses > 0);
 }
 
-function printEggSlots(elementId, eggSlots, km, numInc, hatchedEggsCount) {
+function printDetails(elementId, eggSlots, km, numInc, hatchedEggsCount) {
 	var tr = document.getElementById(elementId).insertRow();
 	var text = '<th>' + km + '</th>';
 	var i = 0;
