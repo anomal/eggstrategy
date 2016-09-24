@@ -408,8 +408,9 @@ function incrementIncubationTime(eggSlots) {
 
 function findHatchedEggs(hatchedEggs, eggSlots) {
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
-		if (eggSlots[i] != null) {
-			var egg = eggSlots[i].egg;
+		var eggSlot = eggSlots[i];
+		if (eggSlot != null) {
+			var egg = eggSlot.egg;
 			if (egg != null && egg.remIncubation <= 0) {
 				var index = hatchedEggs.length;
 				hatchedEggs[index] = egg;
@@ -417,7 +418,7 @@ function findHatchedEggs(hatchedEggs, eggSlots) {
 					tenKmHatches++;
 				}
 
-				var incubator = eggSlots[i].incubator;
+				var incubator = eggSlot.incubator;
 				incubator.isOccupied = false;
 				if (incubator.remUses != Infinity) {
 					incubator.remUses--;
