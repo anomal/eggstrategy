@@ -401,11 +401,13 @@ function incrementIncubationTime(eggSlots) {
 }
 
 function findHatchedEggs(hatchedEggs, eggSlots) {
+	var numHatchedEggs = hatchedEggs.length;
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
 		var eggSlot = eggSlots[i];
 		if (eggSlot != null) {
 			if (eggSlot.egg != null && eggSlot.egg.remIncubation <= 0) {
-				hatchedEggs[hatchedEggs.length] = eggSlot.egg;
+				hatchedEggs[numHatchedEggs] = eggSlot.egg;
+				numHatchedEggs++;
 				if (eggSlot.egg.type == 10) {
 					tenKmHatches++;
 				}
