@@ -71,6 +71,7 @@ function run() {
 		}
 
 		bestFor10kmHatching = [];
+		var bestTotalHatches = 0;
 		var totalTestCases = testCases.length;
 		var c = 0;
 		for (c = 0; c < totalTestCases; c++) {
@@ -170,8 +171,11 @@ function run() {
 			if (!inserted) {
 				bestFor10kmHatching[count] = { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id };
 			}
+			if (totalHatched > bestTotalHatches) {
+				bestTotalHatches = totalHatched;
+			}
 		}
-		printBestResultsDesc();
+		printBestResultsDesc(bestTotalHatches);
 	} catch (err) {
 		document.getElementById("errors").innerHTML = err.message; 
 	}
@@ -211,19 +215,25 @@ function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHat
 	}
 }
 
-function printBestResultsDesc() {
+function printBestResultsDesc(maxTotalHatches) {
 	var text = "<table><tr><th style='width: 2em'>#</th><th style='width: 20em'>Prioritization strategy</th><th>10km hatches</th><th>Total hatches</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
 	for (i = 0; i < length; i++) {
 		var item = bestFor10kmHatching[i];
-		var styleClass = "";
+		var styleClass10km = "";
 		if (item.hatched10kmCount == 0) {
-			styleClass = "bad";
-		} else if ( item.hatched10kmCount == bestFor10kmHatching[0].hatched10kmCount && item.totalHatched == bestFor10kmHatching[0].totalHatched) {
-			styleClass = "good";
+			styleClass10km = "bad";
+		} else if ( item.hatched10kmCount == bestFor10kmHatching[0].hatched10kmCount ) {
+			styleClass10km = "good";
 		}
-		text += "<td class='" + styleClass + "'>" + (item.id) + "</td><td class='" + styleClass + "'>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass + "'>" + item.hatched10kmCount + "</td><td class='" + styleClass + "'>" + item.totalHatched +"</td></tr>";
+		var styleClassAll = "";
+		if (item.totalHatched == 0) {
+			styleClassAll = "bad";
+		} else if ( item.totalHatched == maxTotalHatches ) {
+			styleClassAll = "good";
+		}
+		text += "<td>" + (item.id) + "</td><td>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass10km + "'>" + item.hatched10kmCount + "</td><td class='" + styleClassAll + "'>" + item.totalHatched +"</td></tr>";
 	}
 	var best = document.getElementById("best");
 	best.innerHTML = text + "</table>";
