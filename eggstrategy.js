@@ -357,7 +357,7 @@ function printLeftoverBlueIncubators(elementId, blueIncubators) {
 }
 
 function isUsable(incubator) {
-	return !(incubator.isOccupied) && (incubator.remUses == Infinity || incubator.remUses > 0);
+	return !(incubator.isOccupied) && (incubator.remUses != 0);
 }
 
 function printDetails(elementId, eggSlots, km, numInc, hatchedEggsCount) {
