@@ -89,13 +89,6 @@ function run() {
 			var table = document.createElement("table");
 			table.id = "eggSlots" + (c+1);
 			results.appendChild(table);
-			
-			var stratResults = document.createElement("div");
-			stratResults.id = "strategy" + (c+1);
-			results.appendChild(stratResults);
-			var leftovers = document.createElement("div");
-			leftovers.id = "leftovers" + (c+1);
-			results.appendChild(leftovers);	
 
 			var tableInner = "<tr><th>Distance walked (km)</th>";
 
@@ -148,9 +141,10 @@ function run() {
 					hatched2kmCount++;
 				} 
 			}
+
 			var totalHatched = testCase.hatchedEggs.length;
-			stratResults.innerHTML = "<h3>Hatches:</h3><strong>10km: " + hatched10kmCount + "</strong><br/>5km: " + hatched5kmCount + "<br/>2km: " + hatched2kmCount + "<br/><strong>Total: " + totalHatched + "</strong>";
-			printLeftoverBlueIncubators("leftovers" + (c+1), testCase.blueIncubators);
+			createTestCaseFooter(c, results, hatched10kmCount, hatched5kmCount, hatched2kmCount, totalHatched, testCase.blueIncubators);
+
 			var inserted = false;
 			var count = bestFor10kmHatching.length;
 			var m = 0;
@@ -174,6 +168,18 @@ function run() {
 	} catch (err) {
 		document.getElementById("errors").innerHTML = err.message; 
 	}
+}
+
+function createTestCaseFooter(c, results, hatched10kmCount, hatched5kmCount, hatched2kmCount, totalHatched, blueIncubators) {
+	var stratResults = document.createElement("div");
+	stratResults.id = "strategy" + (c+1);
+	results.appendChild(stratResults);
+	var leftovers = document.createElement("div");
+	leftovers.id = "leftovers" + (c+1);
+	results.appendChild(leftovers);
+
+	stratResults.innerHTML = "<h3>Hatches:</h3><strong>10km: " + hatched10kmCount + "</strong><br/>5km: " + hatched5kmCount + "<br/>2km: " + hatched2kmCount + "<br/><strong>Total: " + totalHatched + "</strong>";
+	printLeftoverBlueIncubators("leftovers" + (c+1), blueIncubators);
 }
 
 function createTestCaseHeaderDesc(results, id, blueStrategy, orangeStrategy) {
