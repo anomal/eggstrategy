@@ -82,9 +82,12 @@ function run() {
 			testCase.hatchedEggs = [];
 
 			var id = getTestCaseId(testCase);
+			var anchor = document.createElement("a");
+			anchor.id = id;
+			results.appendChild(anchor);
 			var h2 = document.createElement("h2");
 			h2.innerHTML = "Strategy " + id + ": " + testCase.blueStrategy + " / " + testCase.orangeStrategy;
-			results.appendChild(h2);
+			anchor.appendChild(h2);
 			var desc = document.createElement("span");
 			desc.innerHTML = "Blue incubator strategy: " + testCase.blueStrategy + "; orange incubator strategy: " + testCase.orangeStrategy + ". ";
 			results.appendChild(desc);
@@ -233,7 +236,7 @@ function printBestResultsDesc(maxTotalHatches) {
 		} else if ( item.totalHatched == maxTotalHatches ) {
 			styleClassAll = "good";
 		}
-		text += "<td>" + (item.id) + "</td><td>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass10km + "'>" + item.hatched10kmCount + "</td><td class='" + styleClassAll + "'>" + item.totalHatched +"</td></tr>";
+		text += "<td><a href='#" + item.id + "'>" + item.id + "</a></td><td>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass10km + "'>" + item.hatched10kmCount + "</td><td class='" + styleClassAll + "'>" + item.totalHatched +"</td></tr>";
 	}
 	var best = document.getElementById("best");
 	best.innerHTML = text + "</table>";
