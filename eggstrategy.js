@@ -433,17 +433,13 @@ function findHatchedEggs(hatchedEggs, eggSlots) {
 
 function incubateFirstEggOfType(incubator, eggSlots, eggType) {
 	var eggSlot = null;
-	var egg = null;
 	var i = 0;
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
 		eggSlot = eggSlots[i];
-		if (eggSlot != null && eggSlot.incubator == null) {
-			egg = eggSlot.egg;
-			if (egg != null && egg.type == eggType) {
-				incubator.isOccupied = true;
-				eggSlot.incubator = incubator;
-				return true;
-			}
+		if (eggSlot != null && eggSlot.incubator == null && eggSlot.egg != null && eggSlot.egg.type == eggType) {
+			incubator.isOccupied = true;
+			eggSlot.incubator = incubator;
+			return true;
 		}
 	}
   	return false;
