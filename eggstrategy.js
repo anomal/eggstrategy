@@ -84,19 +84,8 @@ function run() {
 
 			var id = getTestCaseId(testCase);
 			tenKmHatches = 0;
+			createTestCaseHeaderDesc(results, id, testCase.blueStrategy, testCase.orangeStrategy);
 
-			var anchor = document.createElement("a");
-			anchor.id = id;
-			results.appendChild(anchor);
-			var h2 = document.createElement("h2");
-			h2.innerHTML = "Strategy " + id + ": " + testCase.blueStrategy + " / " + testCase.orangeStrategy;
-			anchor.appendChild(h2);
-			var backtotop = document.createElement("p");
-			backtotop.innerHTML = "<a href='#'>Back to top</a>";
-			results.appendChild(backtotop);
-			var desc = document.createElement("p");
-			desc.innerHTML = "Blue incubator strategy: " + testCase.blueStrategy + "; orange incubator strategy: " + testCase.orangeStrategy + ". ";
-			results.appendChild(desc);
 			var table = document.createElement("table");
 			table.id = "eggSlots" + (c+1);
 			results.appendChild(table);
@@ -185,6 +174,21 @@ function run() {
 	} catch (err) {
 		document.getElementById("errors").innerHTML = err.message; 
 	}
+}
+
+function createTestCaseHeaderDesc(results, id, blueStrategy, orangeStrategy) {
+	var anchor = document.createElement("a");
+	anchor.id = id;
+	results.appendChild(anchor);
+	var h2 = document.createElement("h2");
+	h2.innerHTML = "Strategy " + id + ": " + blueStrategy + " / " + orangeStrategy;
+	anchor.appendChild(h2);
+	var backtotop = document.createElement("p");
+	backtotop.innerHTML = "<a href='#'>Back to top</a>";
+	results.appendChild(backtotop);
+	var desc = document.createElement("p");
+	desc.innerHTML = "Blue incubator strategy: " + blueStrategy + "; orange incubator strategy: " + orangeStrategy + ". ";
+	results.appendChild(desc);
 }
 
 function getTestCaseId(testCase) {
