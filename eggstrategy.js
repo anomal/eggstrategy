@@ -388,7 +388,7 @@ function incrementIncubationTime(eggSlots) {
 	var i = 0;
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
 		var eggSlot = eggSlots[i];
-		if (eggSlot != null && eggSlot.egg != null && eggSlot.incubator != null) {
+		if (eggSlot != null && eggSlot.incubator != null && eggSlot.egg != null) {
 			eggSlot.egg.remIncubation--;
 		}
 	}
