@@ -31,6 +31,7 @@ for (p = 0; p < numPermutations; p++) {
 var TOTAL_EGG_SLOTS = 9;
 var bestFor10kmHatching = [];
 var eggCache = [];
+var tenKmHatches = 0;
 
 function accountsForAllEggTypes(merged) {
 	return contains(merged, 10) && contains(merged, 5) && contains(merged, 2);
@@ -82,6 +83,8 @@ function run() {
 			testCase.hatchedEggs = [];
 
 			var id = getTestCaseId(testCase);
+			tenKmHatches = 0;
+
 			var anchor = document.createElement("a");
 			anchor.id = id;
 			results.appendChild(anchor);
@@ -108,6 +111,7 @@ function run() {
 			var th = document.createElement("th");
 			th.innerHTML = "Distance walked (km)";
 			tr.appendChild(th);
+
 			var i = 0;
 			for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
 				var egg = { type : initEggs[i].type, remIncubation : initEggs[i].remIncubation };
@@ -120,6 +124,9 @@ function run() {
 			}
 			th = document.createElement("th");
 			th.innerHTML = "New Incubators";
+			tr.appendChild(th);
+			th = document.createElement("th");
+			th.innerHTML = "10km hatches";
 			tr.appendChild(th);
 			th = document.createElement("th");
 			th.innerHTML = "Total Hatches";
@@ -137,7 +144,8 @@ function run() {
 				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy);
 				for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
 					if (testCase.eggSlots[s] == null) {
-						testCase.eggSlots[s] = { egg : getNextEgg(eggIndex), incubator : null };
+						var egg = getNextEgg(eggIndex);
+						testCase.eggSlots[s] = { egg : egg, incubator : null };
 						eggIndex++;
 					}
 				}
@@ -378,7 +386,7 @@ function printEggSlots(elementId, eggSlots, km, numNewInc, hatchedEggsCount) {
 			text += '<td class="' + styleClass + '">' + completion + '</td>';
 		}
 	}
-	tr.innerHTML = text + '<td>' + numNewInc + '</td><td>' + hatchedEggsCount + '</td>';
+	tr.innerHTML = text + '<td>' + numNewInc + '</td><td>' + tenKmHatches + '</td><td>' + hatchedEggsCount + '</td>';
 }
 
 function getEggIncubationCompletionText(egg) {
@@ -407,6 +415,10 @@ function findHatchedEggs(hatchedEggs, eggSlots) {
 			if (egg != null && egg.remIncubation <= 0) {
 				var index = hatchedEggs.length;
 				hatchedEggs[index] = egg;
+				if (egg.type == 10) {
+					tenKmHatches++;
+				}
+
 				var incubator = eggSlots[i].incubator;
 				incubator.isOccupied = false;
 				if (incubator.remUses != Infinity) {
