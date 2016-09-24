@@ -358,10 +358,9 @@ function printDetails(eggSlots, km, numInc, hatchedEggsCount) {
 		if (eggSlot == null) {
 			text += '<td class="hatched">Hatched</td>';
 		} else {
-			var incubator = eggSlot.incubator;
 			var styleClass = '';
-			if (incubator != null) {
-				styleClass =  getDetailsCellStyleClass(incubator.remUses);
+			if (eggSlot.incubator != null) {
+				styleClass =  getDetailsCellStyleClass(eggSlot.incubator.remUses);
 			}
 			var completion = getEggIncubationCompletionText(eggSlot.egg);
 			text += '<td class="' + styleClass + '">' + completion + '</td>';
