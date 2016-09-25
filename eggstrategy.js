@@ -202,7 +202,7 @@ function createTestCaseHeaderDesc(results, id, blueStrategy, orangeStrategy) {
 	backtotop.innerHTML = "<a href='#'>Back to top</a>";
 	results.appendChild(backtotop);
 	var desc = document.createElement("p");
-	desc.innerHTML = "Blue incubator strategy: " + blueStrategy + "; orange incubator strategy: " + orangeStrategy + ". ";
+	desc.innerHTML = "Blue incubator strategy: " + blueStrategy + "; orange (∞) incubator strategy: " + orangeStrategy + ". ";
 	results.appendChild(desc);
 }
 
