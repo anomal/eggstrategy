@@ -32,7 +32,10 @@ var TOTAL_EGG_SLOTS = 9;
 var bestFor10kmHatching = [];
 var eggCache = [];
 var tenKmHatches = 0;
-
+var chance10km;
+var chance2km;
+var chance5km;
+var results = document.getElementById("results");
 function accountsForAllEggTypes(merged) {
 	return contains(merged, 10) && contains(merged, 5) && contains(merged, 2);
 }
@@ -51,21 +54,20 @@ function run() {
 	var button = document.getElementById("button");
 	button.disabled = true;
 	button.innerHTML = "Wait ...";
+
+	totalKmWalked = document.getElementById("totalKmWalked").value;
+	distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value;
+	chance10km = document.getElementById("chance10km").value / 100;
+	chance2km = document.getElementById("chance2km").value / 100;
+	chance5km = 1 - chance10km - chance2km;
+
+	document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): " + (chance5km * 100);
+	results.innerHTML = "";
+
 	setTimeout(function() {
 		try {
-			totalKmWalked = document.getElementById("totalKmWalked").value;
-			distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value; 
-			var chance10km = document.getElementById("chance10km").value / 100;
-			var chance2km = document.getElementById("chance2km").value / 100;
-			var chance5km = 1 - chance10km - chance2km;
-
-			document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): " + (chance5km * 100);
-
 			chance10kmDistribMax = chance10km;
 			chance2kmDistribMax = chance10km + chance2km;
-
-			var results = document.getElementById("results");
-			results.innerHTML = "";
 
 			// use same initial eggs for every strategy
 			eggCache = [];
