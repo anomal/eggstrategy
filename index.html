@@ -33,6 +33,7 @@ button {
   box-shadow: none;
   border-radius: 0;
 	font-size: 20px;
+	width: 14em;
 }
 
 button:focus {
@@ -78,7 +79,7 @@ function toggle(elementId) {
 <h2>Parameters</h2>
 <form>
 Total distance walked (km): <input id="totalKmWalked" type="text" value="200"/> Distance to travel to get new incubator (km): <input id="kmPerNewIncubator" type="text" value="20"/><br/>Chance of 10 km egg (%): <input id="chance10km" type="text" value="5"/> Chance of 2 km egg (%): <input id="chance2km" type="text" value="20"/> <span id="calculatedChance5km"></span>
-<p><button type="button" onclick="run()">Run Simulation</button></p> 
+<p><button id="button" type="button" onclick="run()">Run Simulation</button> </p> 
 </form>
 <div id="best"></div>
 <div id="results"></div>

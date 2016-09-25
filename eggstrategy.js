@@ -48,103 +48,110 @@ function contains(a, obj) {
 }
 
 function run() {
-	try {
-		totalKmWalked = document.getElementById("totalKmWalked").value;
-		distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value; 
-		var chance10km = document.getElementById("chance10km").value / 100;
-		var chance2km = document.getElementById("chance2km").value / 100;
-		var chance5km = 1 - chance10km - chance2km;
+	var button = document.getElementById("button");
+	button.disabled = true;
+	button.innerHTML = "Wait ...";
+	setTimeout(function() {
+		try {
+			totalKmWalked = document.getElementById("totalKmWalked").value;
+			distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value; 
+			var chance10km = document.getElementById("chance10km").value / 100;
+			var chance2km = document.getElementById("chance2km").value / 100;
+			var chance5km = 1 - chance10km - chance2km;
 
-		document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): " + (chance5km * 100);
+			document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): " + (chance5km * 100);
 
-		chance10kmDistribMax = chance10km;
-		chance2kmDistribMax = chance10km + chance2km;
+			chance10kmDistribMax = chance10km;
+			chance2kmDistribMax = chance10km + chance2km;
 
-		var results = document.getElementById("results");
-		results.innerHTML = "";
+			var results = document.getElementById("results");
+			results.innerHTML = "";
 
-		// use same initial eggs for every strategy
-		eggCache = [];
-		var initEggs = [];
-		var i = 0;
-		for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
-			initEggs[initEggs.length] = generateRandomEgg();
-		}
-
-		bestFor10kmHatching = [];
-		var bestTotalHatches = 0;
-		var totalTestCases = testCases.length;
-		var c = 0;
-		for (c = 0; c < totalTestCases; c++) {
-			var testCase = testCases[c];
-			testCase.eggSlots = [];
-			testCase.blueIncubators = [];
-			testCase.orangeIncubator = { remUses : Infinity, isOccupied : false };
-			testCase.hatchedEggs = [];
-
-			var id = getTestCaseId(testCase);
-			tenKmHatches = 0;
-			createTestCaseHeaderDesc(results, id, testCase.blueStrategy, testCase.orangeStrategy);
-
-			var table = document.createElement("table");
-			table.id = "eggSlots" + (c+1);
-			results.appendChild(table);
-
-			var tableInner = "<tr><th>Distance walked (km)</th>";
-
+			// use same initial eggs for every strategy
+			eggCache = [];
+			var initEggs = [];
 			var i = 0;
 			for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
-				var egg = { type : initEggs[i].type, remIncubation : initEggs[i].remIncubation };
-				testCase.eggSlots[i] = {egg : egg, incubator : null};
-
-				// create headings in eggSlots tables
-				tableInner += "<th>Egg Slot " + (i+1) + "</th>";
-			}
-			tableInner += "<th>Blue Incubators</th><th>10km hatches</th><th>Total Hatches</th></tr>";
-			tableInner += walk(testCase);
-			table.innerHTML = tableInner;
-
-			var hatched10kmCount = 0;
-			var hatched5kmCount = 0;
-			var hatched2kmCount = 0;
-			var h = 0;
-			for (h = 0; h < testCase.hatchedEggs.length; h++) {
-				var pokemon = testCase.hatchedEggs[h];
-				if (pokemon.type == 10) {
-					hatched10kmCount++;
-				} else if (pokemon.type == 5) {
-					hatched5kmCount++;
-				} else if (pokemon.type == 2) {
-					hatched2kmCount++;
-				} 
+				initEggs[initEggs.length] = generateRandomEgg();
 			}
 
-			var totalHatched = testCase.hatchedEggs.length;
-			createTestCaseFooter(c, results, hatched10kmCount, hatched5kmCount, hatched2kmCount, totalHatched, testCase.blueIncubators);
+			bestFor10kmHatching = [];
+			var bestTotalHatches = 0;
+			var totalTestCases = testCases.length;
+			var c = 0;
+			for (c = 0; c < totalTestCases; c++) {
+				var testCase = testCases[c];
+				testCase.eggSlots = [];
+				testCase.blueIncubators = [];
+				testCase.orangeIncubator = { remUses : Infinity, isOccupied : false };
+				testCase.hatchedEggs = [];
 
-			var inserted = false;
-			var count = bestFor10kmHatching.length;
-			var m = 0;
-// try binary search instead
-			while (!inserted && m < count) {
-				if (isBetter(hatched10kmCount, totalHatched, bestFor10kmHatching[m].hatched10kmCount, bestFor10kmHatching[m].totalHatched)) {
-					bestFor10kmHatching.splice(m, 0, { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id });
-					inserted = true;
+				var id = getTestCaseId(testCase);
+				tenKmHatches = 0;
+				createTestCaseHeaderDesc(results, id, testCase.blueStrategy, testCase.orangeStrategy);
+
+				var table = document.createElement("table");
+				table.id = "eggSlots" + (c+1);
+				results.appendChild(table);
+
+				var tableInner = "<tr><th>Distance walked (km)</th>";
+
+				var i = 0;
+				for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
+					var egg = { type : initEggs[i].type, remIncubation : initEggs[i].remIncubation };
+					testCase.eggSlots[i] = {egg : egg, incubator : null};
+
+					// create headings in eggSlots tables
+					tableInner += "<th>Egg Slot " + (i+1) + "</th>";
 				}
-				m++;
-			}
-			if (!inserted) {
-				bestFor10kmHatching[count] = { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id };
-			}
-			if (totalHatched > bestTotalHatches) {
-				bestTotalHatches = totalHatched;
-			}
-		}
-		printBestResultsDesc(bestTotalHatches);
+				tableInner += "<th>Blue Incubators</th><th>10km hatches</th><th>Total Hatches</th></tr>";
+				tableInner += walk(testCase);
+				table.innerHTML = tableInner;
 
-	} catch (err) {
-		document.getElementById("errors").innerHTML = err.message; 
-	}
+				var hatched10kmCount = 0;
+				var hatched5kmCount = 0;
+				var hatched2kmCount = 0;
+				var h = 0;
+				for (h = 0; h < testCase.hatchedEggs.length; h++) {
+					var pokemon = testCase.hatchedEggs[h];
+					if (pokemon.type == 10) {
+						hatched10kmCount++;
+					} else if (pokemon.type == 5) {
+						hatched5kmCount++;
+					} else if (pokemon.type == 2) {
+						hatched2kmCount++;
+					} 
+				}
+
+				var totalHatched = testCase.hatchedEggs.length;
+				createTestCaseFooter(c, results, hatched10kmCount, hatched5kmCount, hatched2kmCount, totalHatched, testCase.blueIncubators);
+
+				var inserted = false;
+				var count = bestFor10kmHatching.length;
+				var m = 0;
+	// try binary search instead
+				while (!inserted && m < count) {
+					if (isBetter(hatched10kmCount, totalHatched, bestFor10kmHatching[m].hatched10kmCount, bestFor10kmHatching[m].totalHatched)) {
+						bestFor10kmHatching.splice(m, 0, { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id });
+						inserted = true;
+					}
+					m++;
+				}
+				if (!inserted) {
+					bestFor10kmHatching[count] = { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id };
+				}
+				if (totalHatched > bestTotalHatches) {
+					bestTotalHatches = totalHatched;
+				}
+			}
+			printBestResultsDesc(bestTotalHatches);
+		} catch (err) {
+			document.getElementById("errors").innerHTML = err.message; 
+		}
+		var button = document.getElementById("button");
+		button.disabled = false;
+		button.innerHTML = "Run Simulation";
+	}, 20);
 }
 
 function walk(testCase) {
