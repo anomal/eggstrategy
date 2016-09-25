@@ -28,6 +28,10 @@ for (p = 0; p < numPermutations; p++) {
 		}
 	}
 }
+
+var pDesc = document.getElementById("desc");
+pDesc.innerHTML = pDesc.innerHTML + " " + testCases.length + " valid combinations of blue (consumable) and orange (∞) incubator strategy permutations will be compared.";
+
 var TOTAL_EGG_SLOTS = 9;
 var bestFor10kmHatching = [];
 var eggCache = [];
@@ -36,6 +40,7 @@ var chance10km;
 var chance2km;
 var chance5km;
 var results = document.getElementById("results");
+
 function accountsForAllEggTypes(merged) {
 	return contains(merged, 10) && contains(merged, 5) && contains(merged, 2);
 }
