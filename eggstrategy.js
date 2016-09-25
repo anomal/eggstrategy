@@ -152,7 +152,7 @@ function walk(testCase) {
 	var km = 0;
 	var eggIndex = 0;
 	var blueStrategyLength = testCase.blueStrategy.length;
-	var orangeStrategyLength = testCase.blueStrategy.length;
+	var orangeStrategyLength = testCase.orangeStrategy.length;
 	for (km = 0; km < totalKmWalked; km++) {
 		var newInc = 0;
 		if (km % distanceTravelledToGetNewIncubator == 0) {
