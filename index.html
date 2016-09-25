@@ -43,8 +43,8 @@ button {
   border-radius: 0;
 	font-size: 20px;
 	width: 14em;
+	border: none;
 }
-
 
 button:focus {
   outline: none
@@ -70,6 +70,17 @@ button:focus {
 .good {
 	background-color: #ccffcc;
 }
+.buttonDefault {
+	background-color: black;
+	color: white;
+}
+.buttonDefault:hover {
+	background-color: limegreen;
+}
+.buttonClicked {
+	background-color: silver;
+}
+
 #errors { color : red }
 </style>
 <script>
@@ -89,7 +100,7 @@ function toggle(elementId) {
 <h2>Parameters</h2>
 <form>
 Total distance walked (km): <input id="totalKmWalked" type="text" value="200"/> Distance to travel to get new incubator (km): <input id="kmPerNewIncubator" type="text" value="20"/><br/>Chance of 10 km egg (%): <input id="chance10km" type="text" value="5"/> Chance of 2 km egg (%): <input id="chance2km" type="text" value="20"/> <span id="calculatedChance5km"></span>
-<p><button id="button" type="button" onclick="run()">Run Simulation</button> </p> 
+<p><button id="button" type="button" onclick="run()" class="buttonDefault">Run Simulation</button> </p> 
 </form>
 <div id="resultsContainer" style="display:none">
 	<h2>Results</h2>
