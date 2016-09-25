@@ -54,6 +54,7 @@ function run() {
 	var button = document.getElementById("button");
 	button.disabled = true;
 	button.innerHTML = "Wait ...";
+	document.getElementById("resultsContainer").style.display = "none";
 
 	totalKmWalked = document.getElementById("totalKmWalked").value;
 	distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value;
@@ -153,6 +154,7 @@ function run() {
 		var button = document.getElementById("button");
 		button.disabled = false;
 		button.innerHTML = "Run Simulation";
+		document.getElementById("resultsContainer").style.display = "inline";
 	}, 20);
 }
 
