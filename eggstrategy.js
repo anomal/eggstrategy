@@ -101,30 +101,7 @@ function run() {
 				tableInner += "<th>Egg Slot " + (i+1) + "</th>";
 			}
 			tableInner += "<th>Blue Incubators</th><th>10km hatches</th><th>Total Hatches</th></tr>";
-			var km = 0;
-			var eggIndex = 0;
-			var totalBlueIncubators = 0;
-			var blueStrategyLength = testCase.blueStrategy.length;
-			var orangeStrategyLength = testCase.blueStrategy.length;
-			for (km = 0; km < totalKmWalked; km++) {
-				var newInc = 0;
-				if (km % distanceTravelledToGetNewIncubator == 0) {
-					newInc = 1;
-					testCase.blueIncubators[testCase.blueIncubators.length] = { remUses : 3, isOccupied : false };
-				}
-				tableInner += printDetails(testCase.eggSlots, km, testCase.blueIncubators.length, testCase.hatchedEggs.length);
-				useBlueIncubatorStrategy(testCase.blueIncubators, testCase.eggSlots, testCase.blueStrategy, blueStrategyLength);
-				useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy, orangeStrategyLength);
-				var s = 0;
-				for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
-					if (testCase.eggSlots[s] == null) {
-						testCase.eggSlots[s] = { egg : getNextEgg(eggIndex), incubator : null };
-						eggIndex++;
-					}
-				}
-				incrementIncubationTime(testCase.eggSlots);
-				findHatchedEggs(testCase.hatchedEggs, testCase.eggSlots);
-			}
+			tableInner += walk(testCase);
 			table.innerHTML = tableInner;
 
 			var hatched10kmCount = 0;
@@ -168,6 +145,34 @@ function run() {
 	} catch (err) {
 		document.getElementById("errors").innerHTML = err.message; 
 	}
+}
+
+function walk(testCase) {
+	var rows = "";
+	var km = 0;
+	var eggIndex = 0;
+	var blueStrategyLength = testCase.blueStrategy.length;
+	var orangeStrategyLength = testCase.blueStrategy.length;
+	for (km = 0; km < totalKmWalked; km++) {
+		var newInc = 0;
+		if (km % distanceTravelledToGetNewIncubator == 0) {
+			newInc = 1;
+			testCase.blueIncubators[testCase.blueIncubators.length] = { remUses : 3, isOccupied : false };
+		}
+		rows += printDetails(testCase.eggSlots, km, testCase.blueIncubators.length, testCase.hatchedEggs.length);
+		useBlueIncubatorStrategy(testCase.blueIncubators, testCase.eggSlots, testCase.blueStrategy, blueStrategyLength);
+		useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy, orangeStrategyLength);
+		var s = 0;
+		for (s = 0; s < TOTAL_EGG_SLOTS; s++) {
+			if (testCase.eggSlots[s] == null) {
+				testCase.eggSlots[s] = { egg : getNextEgg(eggIndex), incubator : null };
+				eggIndex++;
+			}
+		}
+		incrementIncubationTime(testCase.eggSlots);
+		findHatchedEggs(testCase.hatchedEggs, testCase.eggSlots);
+	}
+	return rows;
 }
 
 function createTestCaseFooter(c, results, hatched10kmCount, hatched5kmCount, hatched2kmCount, totalHatched, blueIncubators) {
