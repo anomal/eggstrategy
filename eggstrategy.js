@@ -362,7 +362,7 @@ function useStrategy(incubator, eggSlots, eggTypes, strategyLength) {
 }
 
 function isUsable(incubator) {
-	return !(incubator.isOccupied) && (incubator.remUses != 0);
+	return incubator.isOccupied === false && incubator.remUses !== 0;
 }
 
 function printDetails(eggSlots, km, numInc, hatchedEggsCount) {
