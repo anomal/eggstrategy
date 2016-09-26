@@ -366,12 +366,16 @@ function isUsable(incubator) {
 }
 
 function printDetails(eggSlots, km, numInc, hatchedEggsCount) {
+	return '<tr><th>' + km + '</th>' + printEggSlots(eggSlots) + '<td>' + numInc + '</td><td>' + tenKmHatches + '</td><td>' + hatchedEggsCount + '</td></tr>';
+}
+
+function printEggSlots(eggSlots) {
 	var text = '';
 	var i;
 	for (i = 0; i < 9; i++) {
 		text += printEggSlotCell(eggSlots[i]);
 	}
-	return '<tr><th>' + km + '</th>' + text + '<td>' + numInc + '</td><td>' + tenKmHatches + '</td><td>' + hatchedEggsCount + '</td></tr>';
+	return text;
 }
 
 function printEggSlotCell(eggSlot) {
