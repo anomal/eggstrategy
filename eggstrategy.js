@@ -368,7 +368,7 @@ function isUsable(incubator) {
 function printDetails(eggSlots, km, numInc, hatchedEggsCount) {
 	var text = '';
 	var i;
-	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
+	for (i = 0; i < 9; i++) {
 		text += printEggSlotCell(eggSlots[i]);
 	}
 	return '<tr><th>' + km + '</th>' + text + '<td>' + numInc + '</td><td>' + tenKmHatches + '</td><td>' + hatchedEggsCount + '</td></tr>';
