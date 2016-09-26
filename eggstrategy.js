@@ -352,7 +352,7 @@ function useBlueIncubatorStrategy(incubators, eggSlots, eggTypes, strategyLength
 
 function useStrategy(incubator, eggSlots, eggTypes, strategyLength) {
 	if (isUsable(incubator)) {
-		var t = 0;
+		var t;
 		for (t = 0; t < strategyLength; t++) {
 			if (incubateFirstEggOfType(incubator, eggSlots, eggTypes[t])) {
 				return true;
