@@ -367,20 +367,21 @@ function isUsable(incubator) {
 
 function printDetails(eggSlots, km, numInc, hatchedEggsCount) {
 	var text = '';
-	var i = 0;
+	var i;
 	for (i = 0; i < TOTAL_EGG_SLOTS; i++) {
-		var eggSlot = eggSlots[i];
-		if (eggSlot == null) {
-			text += '<td class="hatched">Hatched</td>';
-		} else {
-			var styleClass = '';
-			if (eggSlot.incubator != null) {
-				styleClass = getDetailsCellStyleClass(eggSlot.incubator.remUses);
-			}
-			text += '<td class="' + styleClass + '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>';
-		}
+		text += printEggSlotCell(eggSlots[i]);
 	}
 	return '<tr><th>' + km + '</th>' + text + '<td>' + numInc + '</td><td>' + tenKmHatches + '</td><td>' + hatchedEggsCount + '</td></tr>';
+}
+
+function printEggSlotCell(eggSlot) {
+	if (eggSlot == null) {
+		return '<td class="hatched">Hatched</td>';
+	} else if (eggSlot.incubator == null) {
+		return '<td>' + getEggIncubationCompletionText(eggSlot.egg) + '</td>';
+	} else {
+		return '<td class="' + getDetailsCellStyleClass(eggSlot.incubator.remUses) + '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>';
+	}
 }
 
 function getDetailsCellStyleClass(remainingUses) {
