@@ -378,7 +378,7 @@ function printEggSlotCell(eggSlot) {
 	if (eggSlot === null) {
 		return '<td class="hatched">Hatched</td>';
 	} else if (eggSlot.incubator === null) {
-		return '<td>' + getEggIncubationCompletionText(eggSlot.egg) + '</td>';
+		return '<td>0/' + eggSlot.egg.type + 'km</td>';
 	} else {
 		return '<td class="' + getDetailsCellStyleClass(eggSlot.incubator.remUses) + '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>';
 	}
