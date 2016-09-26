@@ -399,8 +399,7 @@ function getDetailsCellStyleClass(remainingUses) {
 
 function getEggIncubationCompletionText(egg) {
 	var eggType = egg.type;
-	var completion = eggType - egg.remIncubation;
-	return completion + "/" + eggType + "km";
+	return (eggType - egg.remIncubation) + "/" + eggType + "km";
 }
 
 function incrementIncubationTime(eggSlots) {
