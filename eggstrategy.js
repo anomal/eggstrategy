@@ -205,13 +205,13 @@ function createTestCaseHeaderDesc(results, id, blueStrategy, orangeStrategy) {
 	anchor.id = id;
 	results.appendChild(anchor);
 	var h2 = document.createElement("h2");
-	h2.innerHTML = "Strategy " + id + ": " + blueStrategy + " / " + orangeStrategy;
+	h2.innerHTML = "Strategy " + id + ": Blue " + blueStrategy + "; Orange " + orangeStrategy;
 	anchor.appendChild(h2);
 	var backtotop = document.createElement("p");
 	backtotop.innerHTML = "<a href='#'>Back to top</a>";
 	results.appendChild(backtotop);
 	var desc = document.createElement("p");
-	desc.innerHTML = "Blue incubator strategy: " + blueStrategy + "; orange (∞) incubator strategy: " + orangeStrategy + ". ";
+	desc.innerHTML = "Blue incubator strategy: " + blueStrategy + ". Orange (∞) incubator strategy: " + orangeStrategy + ". ";
 	results.appendChild(desc);
 }
 
