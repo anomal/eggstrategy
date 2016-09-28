@@ -382,7 +382,14 @@ function printEggSlotCell(eggSlot) {
 	if (eggSlot === null) {
 		return '<td class="hatched">Hatched</td>';
 	} else if (eggSlot.incubator === null) {
-		return '<td>0/' + eggSlot.egg.type + 'km</td>';
+		var type = eggSlot.egg.type;
+		if (type === 5) {
+			return '<td>0/5km</td>';
+		} else if (type === 2) {
+			return '<td>0/2km</td>';
+		} else {
+			return '<td>0/10km</td>';
+		}
 	} else {
 		return '<td class="' + getDetailsCellStyleClass(eggSlot.incubator.remUses) + '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>';
 	}
