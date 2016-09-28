@@ -55,17 +55,34 @@ function contains(a, obj) {
     return false;
 }
 
+function validateNumber(value) {
+	if (/^[0-9]+$/.test(value)) {
+		return true;
+	} else {
+		document.getElementById("errors").innerHTML = "Invalid parameter";
+		return false;
+	}
+}
+
 function run() {
+	document.getElementById("errors").innerHTML = "";
+
+	totalKmWalked = document.getElementById("totalKmWalked").value;
+	distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value;
+	var percent10km = document.getElementById("chance10km").value;
+	var percent2km = document.getElementById("chance2km").value;
+
+    if (validateNumber(totalKmWalked) && validateNumber(distanceTravelledToGetNewIncubator)
+		&& validateNumber(percent10km) && validateNumber(percent2km)) {
+
 	var button = document.getElementById("button");
 	button.disabled = true;
 	button.innerHTML = "Wait ...";
 	button.className = "buttonClicked";
 	document.getElementById("resultsContainer").style.display = "none";
 
-	totalKmWalked = document.getElementById("totalKmWalked").value;
-	distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value;
-	chance10km = document.getElementById("chance10km").value / 100;
-	chance2km = document.getElementById("chance2km").value / 100;
+	chance10km = percent10km / 100;
+	chance2km = percent2km / 100;
 	chance5km = 1 - chance10km - chance2km;
 
 	document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): " + (chance5km * 100);
@@ -163,6 +180,7 @@ function run() {
 		button.className = "buttonDefault";
 		document.getElementById("resultsContainer").style.display = "inline";
 	}, 20);
+    }
 }
 
 function walk(testCase) {

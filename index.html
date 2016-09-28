@@ -102,13 +102,13 @@ function toggle(elementId) {
 Total distance walked (km): <input id="totalKmWalked" type="text" value="200"/> Distance to travel to get new incubator (km): <input id="kmPerNewIncubator" type="text" value="20"/><br/>Chance of 10 km egg (%): <input id="chance10km" type="text" value="5"/> Chance of 2 km egg (%): <input id="chance2km" type="text" value="20"/> <span id="calculatedChance5km"></span>
 <p><button id="button" type="button" onclick="run()" class="buttonDefault">Run Simulation</button> </p> 
 </form>
+<div id="errors"></div>
 <div id="resultsContainer" style="display:none">
 	<h2>Results</h2>
 	<p>Click on the link to each strategy to see detailed results.</p>
 	<div id="best"></div>
 	<div id="results"></div>
 </div>
-<div id="errors"></div>
 <script type="text/javascript" src="eggstrategy.js"></script>
 </body>
 </html>
