@@ -56,12 +56,7 @@ function contains(a, obj) {
 }
 
 function validateNumber(value) {
-	if (/^[0-9]+$/.test(value)) {
-		return true;
-	} else {
-		document.getElementById("errors").innerHTML = "Invalid parameter";
-		return false;
-	}
+	return /^[0-9]+$/.test(value);
 }
 
 function run() {
@@ -71,8 +66,9 @@ function run() {
 	distanceTravelledToGetNewIncubator = document.getElementById("kmPerNewIncubator").value;
 	var percent10km = document.getElementById("chance10km").value;
 	var percent2km = document.getElementById("chance2km").value;
+	var startingBlueIncubators = document.getElementById("startingBlueIncubators").value;
 
-    if (validateNumber(totalKmWalked) && validateNumber(distanceTravelledToGetNewIncubator)
+    if (validateNumber(totalKmWalked) && validateNumber(distanceTravelledToGetNewIncubator) && validateNumber(startingBlueIncubators)
 		&& validateNumber(percent10km) && validateNumber(percent2km)) {
 
 	var button = document.getElementById("button");
@@ -108,8 +104,12 @@ function run() {
 			for (c = 0; c < totalTestCases; c++) {
 				var testCase = testCases[c];
 				testCase.eggSlots = [];
-				testCase.blueIncubators = [];
 				testCase.orangeIncubator = { remUses : Infinity, isOccupied : false };
+				testCase.blueIncubators = [];
+				var b;
+				for (b = 0; b < startingBlueIncubators; b++) {
+					testCase.blueIncubators[b] = { remUses : 3, isOccupied : false };
+				}
 				testCase.hatchedEggs = [];
 
 				var id = getTestCaseId(testCase);
@@ -180,6 +180,8 @@ function run() {
 		button.className = "buttonDefault";
 		document.getElementById("resultsContainer").style.display = "inline";
 	}, 20);
+    } else {
+		document.getElementById("errors").innerHTML = "Invalid parameter";
     }
 }
 
@@ -190,12 +192,12 @@ function walk(testCase) {
 	var blueStrategyLength = testCase.blueStrategy.length;
 	var orangeStrategyLength = testCase.orangeStrategy.length;
 	for (km = 0; km < totalKmWalked; km++) {
+		rows += printDetails(testCase.eggSlots, km, testCase.blueIncubators.length, testCase.hatchedEggs.length);
 		var newInc = 0;
-		if (km % distanceTravelledToGetNewIncubator == 0) {
+		if (km % distanceTravelledToGetNewIncubator == 0 && km > 0) {
 			newInc = 1;
 			testCase.blueIncubators[testCase.blueIncubators.length] = { remUses : 3, isOccupied : false };
 		}
-		rows += printDetails(testCase.eggSlots, km, testCase.blueIncubators.length, testCase.hatchedEggs.length);
 		useBlueIncubatorStrategy(testCase.blueIncubators, testCase.eggSlots, testCase.blueStrategy, blueStrategyLength);
 		useStrategy(testCase.orangeIncubator, testCase.eggSlots, testCase.orangeStrategy, orangeStrategyLength);
 		var s = 0;
