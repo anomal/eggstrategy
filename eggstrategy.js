@@ -39,6 +39,8 @@ var tenKmHatches = 0;
 var chance10km;
 var chance2km;
 var chance5km;
+var blueIncubatorUses = 0;
+var orangeIncubatorUses = 0;
 var results = document.getElementById("results");
 
 function accountsForAllEggTypes(merged) {
@@ -68,8 +70,16 @@ function run() {
 	var percent2km = document.getElementById("chance2km").value;
 	var startingBlueIncubators = document.getElementById("startingBlueIncubators").value;
 
+	chance10km = percent10km / 100;
+	chance2km = percent2km / 100;
+	chance5km = 1 - chance10km - chance2km;
+
+	document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): <strong>" + (chance5km * 100) + "</strong>";
+	document.getElementById("totalBlueIncubators").innerHTML = "Total blue incubators: <strong>" + (+startingBlueIncubators + Math.floor(totalKmWalked/distanceTravelledToGetNewIncubator)) + "</strong>";
+
     if (validateNumber(totalKmWalked) && validateNumber(distanceTravelledToGetNewIncubator) && validateNumber(startingBlueIncubators)
-		&& validateNumber(percent10km) && validateNumber(percent2km)) {
+		&& validateNumber(percent10km) && validateNumber(percent2km) && (+percent10km + +percent2km <= 100)
+		&& distanceTravelledToGetNewIncubator > 0) {
 
 	var button = document.getElementById("button");
 	button.disabled = true;
@@ -77,11 +87,6 @@ function run() {
 	button.className = "buttonClicked";
 	document.getElementById("resultsContainer").style.display = "none";
 
-	chance10km = percent10km / 100;
-	chance2km = percent2km / 100;
-	chance5km = 1 - chance10km - chance2km;
-
-	document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): " + (chance5km * 100);
 	results.innerHTML = "";
 
 	setTimeout(function() {
@@ -98,6 +103,7 @@ function run() {
 			}
 
 			bestFor10kmHatching = [];
+
 			var bestTotalHatches = 0;
 			var totalTestCases = testCases.length;
 			var c = 0;
@@ -106,6 +112,8 @@ function run() {
 				testCase.eggSlots = [];
 				testCase.orangeIncubator = { remUses : Infinity, isOccupied : false };
 				testCase.blueIncubators = [];
+				blueIncubatorUses = 0;
+				orangeIncubatorUses = 0;
 				var b;
 				for (b = 0; b < startingBlueIncubators; b++) {
 					testCase.blueIncubators[b] = { remUses : 3, isOccupied : false };
@@ -158,13 +166,27 @@ function run() {
 	// try binary search instead
 				while (!inserted && m < count) {
 					if (isBetter(hatched10kmCount, totalHatched, bestFor10kmHatching[m].hatched10kmCount, bestFor10kmHatching[m].totalHatched)) {
-						bestFor10kmHatching.splice(m, 0, { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id });
+						bestFor10kmHatching.splice(m, 0, {
+							hatched10kmCount : hatched10kmCount,
+							totalHatched : totalHatched,
+							testCase : testCase,
+							id : id,
+							blueIncubatorUses : blueIncubatorUses,
+							orangeIncubatorUses : orangeIncubatorUses
+						});
 						inserted = true;
 					}
 					m++;
 				}
 				if (!inserted) {
-					bestFor10kmHatching[count] = { hatched10kmCount : hatched10kmCount, totalHatched : totalHatched, testCase : testCase, id : id };
+					bestFor10kmHatching[count] = {
+						hatched10kmCount : hatched10kmCount,
+						totalHatched : totalHatched,
+						testCase : testCase,
+						id : id,
+						blueIncubatorUses : blueIncubatorUses,
+						orangeIncubatorUses : orangeIncubatorUses
+					};
 				}
 				if (totalHatched > bestTotalHatches) {
 					bestTotalHatches = totalHatched;
@@ -269,7 +291,7 @@ function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHat
 }
 
 function printBestResultsDesc(maxTotalHatches) {
-	var text = "<table><tr><th style='width: 2em'>#</th><th style='width: 20em'>Prioritization strategy</th><th>10km hatches</th><th>Total hatches</th></tr>";
+	var text = "<table><tr><th style='width: 2em'>#</th><th style='width: 20em'>Prioritization strategy</th><th>10km hatches</th><th>Total hatches</th><th>Blue incubator uses</th><th>Orange incubator uses</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
 	for (i = 0; i < length; i++) {
@@ -286,7 +308,7 @@ function printBestResultsDesc(maxTotalHatches) {
 		} else if ( item.totalHatched == maxTotalHatches ) {
 			styleClassAll = "good";
 		}
-		text += "<td><a href='#" + item.id + "'>" + item.id + "</a></td><td>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass10km + "'>" + item.hatched10kmCount + "</td><td class='" + styleClassAll + "'>" + item.totalHatched +"</td></tr>";
+		text += "<td><a href='#" + item.id + "'>" + item.id + "</a></td><td>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass10km + "'>" + item.hatched10kmCount + "</td><td class='" + styleClassAll + "'>" + item.totalHatched + "</td><td>" + item.blueIncubatorUses + "</td><td>" + item.orangeIncubatorUses + "</td></tr>";
 	}
 	var best = document.getElementById("best");
 	best.innerHTML = text + "</table>";
@@ -459,6 +481,9 @@ function findHatchedEggs(hatchedEggs, eggSlots) {
 			incubator.isOccupied = false;
 			if (incubator.remUses != Infinity) {
 				incubator.remUses--;
+				blueIncubatorUses++;
+			} else {
+				orangeIncubatorUses++;
 			}
 			eggSlots[i] = null;
 		}				
