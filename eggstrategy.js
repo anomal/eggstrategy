@@ -424,17 +424,24 @@ function printEggSlotCell(eggSlot) {
 	if (eggSlot === null) {
 		return '<td class="hatched">Hatched</td>';
 	} else if (eggSlot.incubator === null) {
-		var type = eggSlot.egg.type;
-		if (type === 5) {
-			return '<td>0/5km</td>';
-		} else if (type === 2) {
-			return '<td>0/2km</td>';
-		} else {
-			return '<td>0/10km</td>';
-		}
+		return printNonIncubatingEggSlotCell(eggSlot.egg.type);
 	} else {
-		return ( '<td class="' + getDetailsCellStyleClass(eggSlot.incubator.remUses) ) + ( '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>' );
+		return printIncubatingEggSlotCell(eggSlot);
 	}
+}
+
+function printNonIncubatingEggSlotCell(type) {
+	if (type === 5) {
+		return '<td>0/5km</td>';
+	} else if (type === 2) {
+		return '<td>0/2km</td>';
+	} else {
+		return '<td>0/10km</td>';
+	}
+}
+
+function printIncubatingEggSlotCell(eggSlot) {
+	return ( '<td class="' + getDetailsCellStyleClass(eggSlot.incubator.remUses) ) + ( '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>' );
 }
 
 function getDetailsCellStyleClass(remainingUses) {
