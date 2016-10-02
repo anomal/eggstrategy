@@ -408,7 +408,7 @@ function isUsable(incubator) {
 }
 
 function printDetails(eggSlots, km, numInc, hatchedEggsCount) {
-	return '<tr><th>' + km + '</th>' + printEggSlots(eggSlots) + '<td>' + numInc + '</td><td>' + tenKmHatches + '</td><td>' + hatchedEggsCount + '</td></tr>';
+	return  ( ( '<tr><th>' + km + '</th>' ) + ( printEggSlots(eggSlots) + '<td>' ) ) + ( ( numInc + '</td><td>' + tenKmHatches ) + ( '</td><td>' + hatchedEggsCount + '</td></tr>' ) );
 }
 
 function printEggSlots(eggSlots) {
@@ -433,7 +433,7 @@ function printEggSlotCell(eggSlot) {
 			return '<td>0/10km</td>';
 		}
 	} else {
-		return '<td class="' + getDetailsCellStyleClass(eggSlot.incubator.remUses) + '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>';
+		return ( '<td class="' + getDetailsCellStyleClass(eggSlot.incubator.remUses) ) + ( '">' + getEggIncubationCompletionText(eggSlot.egg) + '</td>' );
 	}
 }
 
