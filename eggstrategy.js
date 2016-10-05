@@ -75,7 +75,7 @@ function run() {
 	chance5km = 1 - chance10km - chance2km;
 
 	document.getElementById("calculatedChance5km").innerHTML = "➜ Chance of 5 km egg (%): <strong>" + (chance5km * 100) + "</strong>";
-	document.getElementById("totalBlueIncubators").innerHTML = "➜ Total blue incubators: <strong>" + (+startingBlueIncubators + Math.floor(totalKmWalked/distanceTravelledToGetNewIncubator)) + "</strong>";
+	document.getElementById("totalBlueIncubators").innerHTML = "➜ Total blue incubators received: <strong>" + (+startingBlueIncubators + Math.floor(totalKmWalked/distanceTravelledToGetNewIncubator)) + "</strong>";
 
     if (validateNumber(totalKmWalked) && validateNumber(distanceTravelledToGetNewIncubator) && validateNumber(startingBlueIncubators)
 		&& validateNumber(percent10km) && validateNumber(percent2km) && (+percent10km + +percent2km <= 100)
