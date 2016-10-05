@@ -308,7 +308,7 @@ function printBestResultsDesc(maxTotalHatches) {
 		} else if ( item.totalHatched == maxTotalHatches ) {
 			styleClassAll = "good";
 		}
-		text += "<td><a href='#" + item.id + "'>" + item.id + "</a></td><td>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass10km + "'>" + item.hatched10kmCount + "</td><td class='" + styleClassAll + "'>" + item.totalHatched + "</td><td>" + item.blueIncubatorUses + "</td><td>" + item.orangeIncubatorUses + "</td></tr>";
+		text += "<td><a title='See details' href='#" + item.id + "'>" + item.id + "</a></td><td>Blue: " + item.testCase.blueStrategy + "; Orange (∞): " + item.testCase.orangeStrategy + "</td><td class='" + styleClass10km + "'>" + item.hatched10kmCount + "</td><td class='" + styleClassAll + "'>" + item.totalHatched + "</td><td>" + item.blueIncubatorUses + "</td><td>" + item.orangeIncubatorUses + "</td></tr>";
 	}
 	var best = document.getElementById("best");
 	best.innerHTML = text + "</table>";
