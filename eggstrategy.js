@@ -30,7 +30,7 @@ for (p = 0; p < numPermutations; p++) {
 }
 
 var pDesc = document.getElementById("desc");
-pDesc.innerHTML = pDesc.innerHTML + " " + testCases.length + " valid combinations of blue (consumable) and orange (∞) incubator strategy permutations will be compared.";
+pDesc.innerHTML = pDesc.innerHTML + " " + testCases.length + " valid combinations of blue (3-use) and orange (∞) incubator strategy permutations will be compared and ranked.";
 
 var TOTAL_EGG_SLOTS = 9;
 var bestFor10kmHatching = [];
