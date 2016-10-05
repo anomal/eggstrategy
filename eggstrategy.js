@@ -253,7 +253,7 @@ function createTestCaseHeaderDesc(results, id, blueStrategy, orangeStrategy) {
 	backtotop.innerHTML = "<a href='#'>Back to top</a>";
 	results.appendChild(backtotop);
 	var desc = document.createElement("p");
-	desc.innerHTML = "Blue incubator strategy: " + blueStrategy + ". Orange (∞) incubator strategy: " + orangeStrategy + ". ";
+	desc.innerHTML = "<em>Strategy description:</em> Use your blue incubators only to incubate eggs in this order: " + blueStrategy + ". Use your orange (∞) incubator only to incubate eggs in this order: " + orangeStrategy + ". ";
 	results.appendChild(desc);
 }
 
@@ -291,7 +291,7 @@ function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHat
 }
 
 function printBestResultsDesc(maxTotalHatches) {
-	var text = "<table><tr><th colspan='2'>Egg Prioritization Strategy</th><th colspan='2'>Egg Hatches</th><th colspan='2'>Incubator Uses</th></tr><tr><th style='width: 2em'>ID</th><th style='width: 20em'>Title</th><th>10km</th><th>Any</th><th>Blue</th><th>Orange</th></tr>";
+	var text = "<table><tr><th colspan='2'>Egg Prioritization Strategy</th><th colspan='4'>Results</th></tr><tr><th style='width: 2em'>ID</th><th style='width: 20em'>Title</th><th>10km hatches</th><th>Any hatches</th><th>Blue incubator uses</th><th>Orange incubator uses</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
 	for (i = 0; i < length; i++) {
