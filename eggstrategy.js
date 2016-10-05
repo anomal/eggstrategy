@@ -246,7 +246,7 @@ function createTestCaseHeaderDesc(results, id, blueStrategy, orangeStrategy) {
 	var anchor = document.createElement("a");
 	anchor.id = id;
 	results.appendChild(anchor);
-	var h2 = document.createElement("h2");
+	var h2 = document.createElement("h3");
 	h2.innerHTML = "Strategy " + id + ": Blue " + blueStrategy + "; Orange " + orangeStrategy;
 	anchor.appendChild(h2);
 	var backtotop = document.createElement("p");
