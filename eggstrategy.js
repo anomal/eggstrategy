@@ -74,8 +74,8 @@ function run() {
 	chance2km = percent2km / 100;
 	chance5km = 1 - chance10km - chance2km;
 
-	document.getElementById("calculatedChance5km").innerHTML = "Chance of 5 km egg (%): <strong>" + (chance5km * 100) + "</strong>";
-	document.getElementById("totalBlueIncubators").innerHTML = "Total blue incubators: <strong>" + (+startingBlueIncubators + Math.floor(totalKmWalked/distanceTravelledToGetNewIncubator)) + "</strong>";
+	document.getElementById("calculatedChance5km").innerHTML = "➜ Chance of 5 km egg (%): <strong>" + (chance5km * 100) + "</strong>";
+	document.getElementById("totalBlueIncubators").innerHTML = "➜ Total blue incubators: <strong>" + (+startingBlueIncubators + Math.floor(totalKmWalked/distanceTravelledToGetNewIncubator)) + "</strong>";
 
     if (validateNumber(totalKmWalked) && validateNumber(distanceTravelledToGetNewIncubator) && validateNumber(startingBlueIncubators)
 		&& validateNumber(percent10km) && validateNumber(percent2km) && (+percent10km + +percent2km <= 100)
@@ -291,7 +291,7 @@ function isBetter(aHatched10kmCount, aTotalHatched, bHatched10kmCount, bTotalHat
 }
 
 function printBestResultsDesc(maxTotalHatches) {
-	var text = "<table><tr><th style='width: 2em'>#</th><th style='width: 20em'>Prioritization strategy</th><th>10km hatches</th><th>Total hatches</th><th>Blue incubator uses</th><th>Orange incubator uses</th></tr>";
+	var text = "<table><tr><th style='width: 2em'>ID</th><th style='width: 20em'>Prioritization strategy</th><th>10km hatches</th><th>Total hatches</th><th>Blue incubator uses</th><th>Orange incubator uses</th></tr>";
 	var i = 0;
 	var length = bestFor10kmHatching.length;
 	for (i = 0; i < length; i++) {

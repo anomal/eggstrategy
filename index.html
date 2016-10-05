@@ -98,15 +98,14 @@ function toggle(elementId) {
 <p id="desc">What is the best incubation strategy for a limited-resource player to maximize the number of 10km egg hatches?</p><p>In this simulation, eggs are replenished every 1 km walked. Eggs are generated randomly for each simulation run. Other parameters can be adjusted below.</p>
 <h2>Parameters</h2>
 <form>
-Total distance to walk (km): <input id="totalKmWalked" type="text" value="200"/>
-<br/>Starting blue incubators: <input id="startingBlueIncubators" type="text" value="1"/> Distance to travel to get new incubator (km): <input id="kmPerNewIncubator" type="text" value="30"/>  <span id="totalBlueIncubators"></span>
+Total distance to walk (km): <input id="totalKmWalked" type="text" value="200"/> Distance to travel to get new incubator (km): <input id="kmPerNewIncubator" type="text" value="30"/> Starting blue incubators: <input id="startingBlueIncubators" type="text" value="1"/> <span id="totalBlueIncubators"></span>
 <br/>Chance of 10 km egg (%): <input id="chance10km" type="text" value="5"/> Chance of 2 km egg (%): <input id="chance2km" type="text" value="20"/> <span id="calculatedChance5km"></span>
 <p><button id="button" type="button" onclick="run()" class="buttonDefault">Run Simulation</button> </p> 
 </form>
 <div id="errors"></div>
 <div id="resultsContainer" style="display:none">
 	<h2>Results</h2>
-	<p>Click on the link to each strategy to see detailed results.</p>
+	<p>Click on the ID link to see the simulation run details for each strategy, e.g., on which eggs the blue and orange incubators were used for each kilometre walked.</p>
 	<div id="best"></div>
 	<div id="results"></div>
 </div>
