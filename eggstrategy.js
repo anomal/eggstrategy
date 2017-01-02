@@ -30,7 +30,7 @@ for (p = 0; p < numPermutations; p++) {
 }
 
 var pDesc = document.getElementById("desc");
-pDesc.innerHTML = pDesc.innerHTML + " " + testCases.length + " valid combinations of blue (3-use) and orange (∞) incubator strategy permutations will be compared and ranked.";
+pDesc.innerHTML = pDesc.innerHTML + " " + testCases.length + " valid combinations of blue (finite-use) and orange (∞) incubator strategy permutations will be compared and ranked.";
 
 var TOTAL_EGG_SLOTS = 9;
 var bestFor10kmHatching = [];
@@ -69,6 +69,7 @@ function run() {
 	var percent10km = document.getElementById("chance10km").value;
 	var percent2km = document.getElementById("chance2km").value;
 	var startingBlueIncubators = document.getElementById("startingBlueIncubators").value;
+	var startingBlueIncubatorUses = document.getElementById("startingBlueIncubatorUses").value;
 
 	chance10km = percent10km / 100;
 	chance2km = percent2km / 100;
@@ -77,7 +78,7 @@ function run() {
 	document.getElementById("calculatedChance5km").innerHTML = "➜ Chance of 5 km egg (%): <strong>" + (chance5km * 100) + "</strong>";
 	document.getElementById("totalBlueIncubators").innerHTML = "➜ Total blue incubators received by the end: <strong>" + (+startingBlueIncubators + Math.floor(totalKmWalked/distanceTravelledToGetNewIncubator)) + "</strong>";
 
-    if (validateNumber(totalKmWalked) && validateNumber(distanceTravelledToGetNewIncubator) && validateNumber(startingBlueIncubators)
+    if (validateNumber(totalKmWalked) && validateNumber(distanceTravelledToGetNewIncubator) && validateNumber(startingBlueIncubators) && validateNumber(startingBlueIncubatorUses)
 		&& validateNumber(percent10km) && validateNumber(percent2km) && (+percent10km + +percent2km <= 100)
 		&& distanceTravelledToGetNewIncubator > 0) {
 
@@ -116,7 +117,7 @@ function run() {
 				orangeIncubatorUses = 0;
 				var b;
 				for (b = 0; b < startingBlueIncubators; b++) {
-					testCase.blueIncubators[b] = { remUses : 3, isOccupied : false };
+					testCase.blueIncubators[b] = { remUses : startingBlueIncubatorUses, isOccupied : false };
 				}
 				testCase.hatchedEggs = [];
 
